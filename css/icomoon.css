@@ -1788,4 +1788,7 @@
 .icon-IcoMoon:before {
   content: "\eb1a";
 }
+.icon-test:before{
+  content: "\f1cb";
+}
 
