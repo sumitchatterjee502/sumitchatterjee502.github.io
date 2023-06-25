@@ -694,8 +694,8 @@ body.offcanvas {
   .services .desc {
     margin-top: 60px; }
     .services .desc h3 {
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 15px;
+      font-weight: 600;
       text-transform: uppercase; }
   .services.color-2 .icon {
     background: #ec5453; }
