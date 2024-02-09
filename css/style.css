@@ -554,9 +554,9 @@ body.offcanvas {
   -ms-border-radius: 50%;
   border-radius: 50%;
   text-align: center;
-  -moz-box-shadow: 0 0 0 5px #647f90967;
-  -webkit-box-shadow: 0 0 0 5px #647f90967;
-  box-shadow: 0 0 0 5px #647f90967;
+  -moz-box-shadow: 0 0 0 5px #647f90;
+  -webkit-box-shadow: 0 0 0 5px #647f90;
+  box-shadow: 0 0 0 5px #647f90;
   line-height: 40px;
   float: left; }
   .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon i {
