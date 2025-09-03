@@ -85,6 +85,7 @@
             color: white;
             padding: 120px 0 80px;
             text-align: center;
+            position: relative;
         }
         .hero-content h1 {
             font-size: 3rem;
@@ -144,6 +145,42 @@
         .btn-secondary:hover {
             background: white;
             color: #2c3e50;
+        }
+        /* Experience Badge */
+        .experience-badge {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, #ff6b6b, #ff9e6b);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            animation: pulse 2s infinite;
+            z-index: 10;
+        }
+        .experience-badge::before {
+            content: "✓";
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            }
         }
         /* Main Content */
         main {
@@ -370,7 +407,7 @@
             background: #ecf0f1;
             color: #2c3e50;
             padding: 0.3rem 0.6rem;
-            border-radius: 4px;
+            borderRadius: 4px;
             font-size: 0.85rem;
             font-weight: 500;
             border: 1px solid #bdc3c7;
@@ -529,6 +566,14 @@
             .achievements-list {
                 grid-template-columns: 1fr;
             }
+            /* Experience Badge Responsive */
+            .experience-badge {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin: 0 auto 20px;
+                width: fit-content;
+            }
             /* Timeline Responsive */
             .timeline-container::after {
                 left: 31px;
@@ -575,6 +620,9 @@
                 background: white !important;
                 color: black !important;
             }
+            .experience-badge {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -598,6 +646,7 @@
         </nav>
     </header>
     <section id="home" class="hero">
+        <div class="experience-badge">8.5+ Years Experience</div>
         <div class="container">
             <div class="hero-content">
                 <h1>Sumit Chatterjee</h1>
@@ -618,7 +667,7 @@
     <main>
         <section id="skills" class="container">
             <h2 class="section-title">Core Competencies</h2>
-            <p class="section-subtitle"><center>Comprehensive technical expertise across modern development technologies and enterprise-grade solutions</center></p>
+            <p class="section-subtitle">Comprehensive technical expertise across modern development technologies and enterprise-grade solutions</p>
             <div class="skills-grid">
                 <div class="skill-category">
                     <h3>Programming Languages</h3>
@@ -627,6 +676,8 @@
                         <span class="skill-tag">JavaScript</span>
                         <span class="skill-tag">Python</span>
                         <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
                     </div>
                 </div>
                 <div class="skill-category">
@@ -905,47 +956,42 @@
                         <h4>Phone</h4>
                         <a href="tel:+919163808896">+91-9163808896</a>
                     </div>
-                    
                     <div class="contact-item">
                         <div class="contact-icon">💼</div>
                         <h4>LinkedIn</h4>
                         <a href="https://www.linkedin.com/in/sumit-chatterjee-13ab3299/" target="_blank">Professional Profile</a>
                     </div>
-                    
                     <div class="contact-item">
                         <div class="contact-icon">💻</div>
                         <h4>GitHub</h4>
                         <a href="https://github.com/sumitchatterjee502" target="_blank">Code Portfolio</a>
                     </div>
                 </div>
-                
                 <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
                     <p>&copy; 2025 Sumit Chatterjee. All rights reserved.</p>
                 </div>
             </div>
         </section>
     </main>
-
-        <script>
+    <script>
         // Mobile menu toggle
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
-
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
-
+        
         // Close mobile menu when clicking on links
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
             });
         });
-
+        
         // Active navigation highlighting
         const navItems = document.querySelectorAll('.nav-links a');
         const sections = document.querySelectorAll('section');
-
+        
         function setActiveNav() {
             let current = '';
             sections.forEach(section => {
@@ -954,7 +1000,7 @@
                     current = section.getAttribute('id');
                 }
             });
-
+            
             navItems.forEach(item => {
                 item.classList.remove('active');
                 if (item.getAttribute('href').substring(1) === current) {
@@ -962,13 +1008,11 @@
                 }
             });
         }
-
+        
         // Header background change on scroll
         const header = document.querySelector('header');
-        
         window.addEventListener('scroll', () => {
             setActiveNav();
-            
             if (window.scrollY > 50) {
                 header.style.background = 'rgba(255, 255, 255, 0.95)';
                 header.style.backdropFilter = 'blur(10px)';
@@ -977,7 +1021,7 @@
                 header.style.backdropFilter = 'none';
             }
         });
-
+        
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -992,7 +1036,7 @@
                 }
             });
         });
-
+        
         // Initial call to set active navigation
         setActiveNav();
     </script>
