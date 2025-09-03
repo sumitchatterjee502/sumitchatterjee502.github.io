@@ -10,20 +10,17 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Segoe UI', 'Arial', sans-serif;
             line-height: 1.6;
             color: #333;
             background-color: #f8f9fa;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
         /* Header */
         header {
             background: #ffffff;
@@ -34,28 +31,24 @@
             z-index: 1000;
             transition: all 0.3s ease;
         }
-
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
         }
-
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
             color: #2c3e50;
             letter-spacing: -1px;
         }
-
         .nav-links {
             display: flex;
             list-style: none;
             gap: 2rem;
         }
-
-.section-subtitle {
+        .section-subtitle {
             font-size: 1.1rem;
             color: #666;
             max-width: 600px;
@@ -70,18 +63,15 @@
             border-radius: 4px;
             transition: all 0.3s ease;
         }
-
         .nav-links a:hover, .nav-links a.active {
             background-color: #3498db;
             color: white;
         }
-
         .menu-toggle {
             display: none;
             flex-direction: column;
             cursor: pointer;
         }
-
         .menu-toggle span {
             width: 25px;
             height: 3px;
@@ -89,7 +79,6 @@
             margin: 3px 0;
             transition: 0.3s;
         }
-
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
@@ -97,21 +86,18 @@
             padding: 120px 0 80px;
             text-align: center;
         }
-
         .hero-content h1 {
             font-size: 3rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             letter-spacing: -1px;
         }
-
         .hero-content .subtitle {
             font-size: 1.4rem;
             font-weight: 300;
             margin-bottom: 1.5rem;
             opacity: 0.95;
         }
-
         .hero-content .description {
             font-size: 1.1rem;
             max-width: 700px;
@@ -119,21 +105,17 @@
             opacity: 0.9;
             line-height: 1.7;
         }
-
         .contact-info {
             margin-bottom: 2.5rem;
         }
-
         .contact-info span {
             margin: 0 1.5rem;
             font-size: 0.95rem;
             opacity: 0.9;
         }
-
         .cta-buttons {
             margin-top: 2rem;
         }
-
         .btn {
             display: inline-block;
             padding: 12px 24px;
@@ -144,39 +126,32 @@
             transition: all 0.3s ease;
             border: 2px solid transparent;
         }
-
         .btn-primary {
             background: white;
             color: #2c3e50;
             border-color: white;
         }
-
         .btn-primary:hover {
             background: transparent;
             color: white;
             border-color: white;
         }
-
         .btn-secondary {
             background: transparent;
             color: white;
             border-color: white;
         }
-
         .btn-secondary:hover {
             background: white;
             color: #2c3e50;
         }
-
         /* Main Content */
         main {
             background: white;
         }
-
         section {
             padding: 60px 0;
         }
-
         .section-title {
             font-size: 2.2rem;
             font-weight: 700;
@@ -185,7 +160,6 @@
             color: #2c3e50;
             position: relative;
         }
-
         .section-title::after {
             content: '';
             display: block;
@@ -194,19 +168,16 @@
             background: #3498db;
             margin: 1rem auto 0;
         }
-
         /* Skills Section */
         #skills {
             background: #f8f9fa;
         }
-
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
-
         .skill-category {
             background: white;
             padding: 2rem;
@@ -214,7 +185,6 @@
             box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             border: 1px solid #e9ecef;
         }
-
         .skill-category h3 {
             color: #2c3e50;
             margin-bottom: 1.5rem;
@@ -223,13 +193,11 @@
             border-bottom: 2px solid #3498db;
             padding-bottom: 0.5rem;
         }
-
         .skill-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.8rem;
         }
-
         .skill-tag {
             background: #ecf0f1;
             color: #2c3e50;
@@ -239,23 +207,76 @@
             font-weight: 500;
             border: 1px solid #bdc3c7;
         }
-
         /* Experience Section */
-        .experience-timeline {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .timeline-item {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-            border-left: 4px solid #3498db;
+        .timeline-container {
             position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 0;
         }
-
+        
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #3498db;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 10px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            margin-bottom: 60px;
+            padding: 10px 40px;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border: 4px solid #3498db;
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -13px;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -13px;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
         .job-header {
             display: flex;
             justify-content: space-between;
@@ -264,20 +285,17 @@
             border-bottom: 1px solid #ecf0f1;
             padding-bottom: 1rem;
         }
-
         .job-title {
             font-size: 1.3rem;
             font-weight: 700;
             color: #2c3e50;
             margin-bottom: 0.3rem;
         }
-
         .company {
             color: #3498db;
             font-weight: 600;
             font-size: 1.1rem;
         }
-
         .duration {
             background: #2c3e50;
             color: white;
@@ -286,19 +304,16 @@
             font-size: 0.9rem;
             font-weight: 500;
         }
-
         .job-description {
             list-style: none;
             margin-top: 1rem;
         }
-
         .job-description li {
             margin-bottom: 0.8rem;
             padding-left: 1.5rem;
             position: relative;
             line-height: 1.6;
         }
-
         .job-description li::before {
             content: '•';
             position: absolute;
@@ -307,19 +322,16 @@
             font-weight: bold;
             font-size: 1.2rem;
         }
-
         /* Projects Section */
         #projects {
             background: #f8f9fa;
         }
-
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
-
         .project-card {
             background: white;
             padding: 2rem;
@@ -328,38 +340,32 @@
             border: 1px solid #e9ecef;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
-
         .project-title {
             font-size: 1.3rem;
             font-weight: 700;
             color: #2c3e50;
             margin-bottom: 0.5rem;
         }
-
         .project-role {
             color: #3498db;
             font-weight: 600;
             margin-bottom: 1rem;
             font-size: 0.95rem;
         }
-
         .project-description {
             color: #555;
             line-height: 1.6;
             margin-bottom: 1.5rem;
         }
-
         .project-tech {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
         }
-
         .tech-tag {
             background: #ecf0f1;
             color: #2c3e50;
@@ -369,7 +375,6 @@
             font-weight: 500;
             border: 1px solid #bdc3c7;
         }
-
         /* Education & Certifications */
         .education-cert {
             display: grid;
@@ -377,7 +382,6 @@
             gap: 2rem;
             margin-top: 2rem;
         }
-
         .education-card, .cert-card {
             background: white;
             padding: 2rem;
@@ -385,50 +389,41 @@
             box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             border: 1px solid #e9ecef;
         }
-
         .education-card h3, .cert-card h3 {
             color: #2c3e50;
             margin-bottom: 1rem;
             font-size: 1.2rem;
             font-weight: 600;
         }
-
         .degree-info, .cert-info {
             margin-bottom: 0.8rem;
         }
-
         .institution, .cert-issuer {
             color: #3498db;
             font-weight: 600;
         }
-
         .duration-edu {
             color: #7f8c8d;
             font-size: 0.9rem;
         }
-
         /* Contact Section */
         .contact-section {
             background: #2c3e50;
             color: white;
             text-align: center;
         }
-
         .contact-section .section-title {
             color: white;
         }
-
         .contact-section .section-title::after {
             background: #3498db;
         }
-
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
-
         .contact-item {
             background: rgba(255,255,255,0.05);
             padding: 1.5rem;
@@ -436,31 +431,25 @@
             text-align: center;
             transition: background 0.3s ease;
         }
-
         .contact-item:hover {
             background: rgba(255,255,255,0.1);
         }
-
         .contact-icon {
             font-size: 2rem;
             margin-bottom: 1rem;
             color: #3498db;
         }
-
         .contact-item h4 {
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
-
         .contact-item a {
             color: #ecf0f1;
             text-decoration: none;
         }
-
         .contact-item a:hover {
             color: #3498db;
         }
-
         .achievements {
             background: white;
             padding: 2rem;
@@ -468,27 +457,23 @@
             margin-top: 2rem;
             box-shadow: 0 2px 15px rgba(0,0,0,0.08);
         }
-
         .achievements h3 {
             color: #2c3e50;
             margin-bottom: 1rem;
             text-align: center;
         }
-
         .achievements-list {
             list-style: none;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1rem;
         }
-
         .achievements-list li {
             padding: 0.8rem 0;
             border-bottom: 1px solid #ecf0f1;
             position: relative;
             padding-left: 1.5rem;
         }
-
         .achievements-list li::before {
             content: '✓';
             position: absolute;
@@ -496,13 +481,11 @@
             color: #27ae60;
             font-weight: bold;
         }
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .menu-toggle {
                 display: flex;
             }
-
             .nav-links {
                 position: fixed;
                 top: 100%;
@@ -517,75 +500,77 @@
                 visibility: hidden;
                 transition: all 0.3s ease;
             }
-
             .nav-links.active {
                 transform: translateY(0);
                 opacity: 1;
                 visibility: visible;
             }
-
             .hero-content h1 {
                 font-size: 2.2rem;
             }
-
             .hero-content .subtitle {
                 font-size: 1.2rem;
             }
-
             .contact-info span {
                 display: block;
                 margin: 0.5rem 0;
             }
-
             .job-header {
                 flex-direction: column;
                 gap: 1rem;
                 align-items: flex-start;
             }
-
             .projects-grid {
                 grid-template-columns: 1fr;
             }
-
             .contact-grid {
                 grid-template-columns: 1fr;
             }
-
             .achievements-list {
                 grid-template-columns: 1fr;
             }
+            /* Timeline Responsive */
+            .timeline-container::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+                left: 0 !important;
+            }
+            
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 18px;
+                right: auto;
+            }
         }
-
         @media (max-width: 480px) {
             .hero-content h1 {
                 font-size: 1.8rem;
             }
-            
             .section-title {
                 font-size: 1.8rem;
             }
-
             .container {
                 padding: 0 15px;
             }
         }
-
         /* Smooth scrolling */
         html {
             scroll-behavior: smooth;
         }
-
         /* Print styles */
         @media print {
             .nav-links, .menu-toggle, .cta-buttons {
                 display: none;
             }
-            
             .hero {
                 background: white !important;
                 color: black !important;
             }
-            
             .contact-section {
                 background: white !important;
                 color: black !important;
@@ -612,20 +597,17 @@
             </div>
         </nav>
     </header>
-
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
                 <h1>Sumit Chatterjee</h1>
                 <div class="subtitle">Senior Software Engineer & Technical Leader</div>
                 <p class="description">Accomplished senior software engineering professional with demonstrated expertise in architecting and delivering enterprise-scale applications. Proven track record of leading cross-functional teams, implementing cutting-edge technologies, and driving measurable business outcomes in fintech, insurance, and e-commerce sectors.</p>
-                
                 <div class="contact-info">
                     <span>📍 Kolkata, West Bengal, India</span>
                     <span>📞 +91-9163808896</span>
                     <span>✉️ sumitchatterjee502@gmail.com</span>
                 </div>
-                
                 <div class="cta-buttons">
                     <a href="#projects" class="btn btn-primary">View Projects</a>
                     <a href="#contact" class="btn btn-secondary">Contact Me</a>
@@ -633,7 +615,6 @@
             </div>
         </div>
     </section>
-
     <main>
         <section id="skills" class="container">
             <h2 class="section-title">Core Competencies</h2>
@@ -646,11 +627,9 @@
                         <span class="skill-tag">JavaScript</span>
                         <span class="skill-tag">Python</span>
                         <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">HTML5</span>
-                        <span class="skill-tag">CSS3</span>
                     </div>
                 </div>
-                 <div class="skill-category">
+                <div class="skill-category">
                     <h3>Design</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">HTML5</span>
@@ -659,7 +638,6 @@
                         <span class="skill-tag">Bootstrap</span>
                     </div>
                 </div>
-                
                 <div class="skill-category">
                     <h3>Frameworks & Libraries</h3>
                     <div class="skill-tags">
@@ -672,7 +650,6 @@
                         <span class="skill-tag">jQuery</span>
                     </div>
                 </div>
-                
                 <div class="skill-category">
                     <h3>Databases & Infrastructure</h3>
                     <div class="skill-tags">
@@ -693,7 +670,6 @@
                         <span class="skill-tag">Swagger</span>
                     </div>
                 </div>
-                
                 <div class="skill-category">
                     <h3>Leadership & Management</h3>
                     <div class="skill-tags">
@@ -707,76 +683,79 @@
                 </div>
             </div>
         </section>
-
         <section id="experience" class="container">
             <h2 class="section-title">Professional Experience</h2>
-            <div class="experience-timeline">
+            <div class="timeline-container">
                 <div class="timeline-item">
-                    <div class="job-header">
-                        <div>
-                            <div class="job-title">Team Lead</div>
-                            <div class="company">DAPL</div>
+                    <div class="timeline-content">
+                        <div class="job-header">
+                            <div>
+                                <div class="job-title">Team Lead</div>
+                                <div class="company">DAPL</div>
+                            </div>
+                            <div class="duration">June 2025 - Present</div>
                         </div>
-                        <div class="duration">June 2025 - Present</div>
+                        <ul class="job-description">
+                            <li>Delivered core insurance applications utilizing PHP, React.js, Node.js, Medusa.js, and Tailwind CSS, enhancing claim processing and renewal system efficiency</li>
+                            <li>Integrated payment gateways (Razor pay, Paytm) and Google Vision OCR services, achieving 40% reduction in processing time and improved customer experience</li>
+                            <li>Built scalable RESTful APIs with Lumen, Express.js, and Strapi, supporting high-availability infrastructure processing 1M+ daily requests with 99.9% uptime</li>
+                            <li>Implemented automated CI/CD pipelines reducing manual deployments by 60% while accelerating delivery cycles and minimizing production risks</li>
+                            <li>Mentored development teams, established technical standards, and drove continuous improvement initiatives across all project phases</li>
+                        </ul>
                     </div>
-                    <ul class="job-description">
-                        <li>Delivered core insurance applications utilizing PHP, React.js, Node.js, Medusa.js, and Tailwind CSS, enhancing claim processing and renewal system efficiency</li>
-                        <li>Integrated payment gateways (Razor pay, Paytm) and Google Vision OCR services, achieving 40% reduction in processing time and improved customer experience</li>
-                        <li>Built scalable RESTful APIs with Lumen, Express.js, and Strapi, supporting high-availability infrastructure processing 1M+ daily requests with 99.9% uptime</li>
-                        <li>Implemented automated CI/CD pipelines reducing manual deployments by 60% while accelerating delivery cycles and minimizing production risks</li>
-                        <li>Mentored development teams, established technical standards, and drove continuous improvement initiatives across all project phases</li>
-                    </ul>
                 </div>
-
                 <div class="timeline-item">
-                    <div class="job-header">
-                        <div>
-                            <div class="job-title">Team Lead</div>
-                            <div class="company">Indus Net Technologies</div>
+                    <div class="timeline-content">
+                        <div class="job-header">
+                            <div>
+                                <div class="job-title">Team Lead</div>
+                                <div class="company">Indus Net Technologies</div>
+                            </div>
+                            <div class="duration">April 2022 - June 2025</div>
                         </div>
-                        <div class="duration">April 2022 - June 2025</div>
+                        <ul class="job-description">
+                            <li>Spearheaded the design and implementation of core insurance applications using PHP, React.js, and Node.js, Medusa.js, Tailwind CSS driving efficiency in claim and renewal processes</li>
+                            <li>Architected and deployed RESTful web services leveraging Lumen, Express.js, and Strapi to support high-availability systems, managing over 1 million daily requests and ensuring 99.9% uptime for mission-critical applications</li>
+                            <li>Introduced disaster recovery mechanisms, ensuring 99.9% system uptime</li>
+                            <li>Orchestrated third-party API integrations, including Razorpay, Paytm payment gateways, and Google Vision OCR services, reducing processing time by 40%</li>
+                            <li>Developed CI/CD pipelines, automating deployment processes and reducing manual intervention by 60%</li>
+                        </ul>
                     </div>
-                    <ul class="job-description">
-                        <li>Spearheaded the design and implementation of core insurance applications using PHP, React.js, and Node.js, Medusa.js, Tailwind CSS driving efficiency in claim and renewal processes</li>
-                        <li>Architected and deployed RESTful web services leveraging Lumen, Express.js, and Strapi to support high-availability systems, managing over 1 million daily requests and ensuring 99.9% uptime for mission-critical applications</li>
-                        <li>Introduced disaster recovery mechanisms, ensuring 99.9% system uptime</li>
-                        <li>Orchestrated third-party API integrations, including Razorpay, Paytm payment gateways, and Google Vision OCR services, reducing processing time by 40%</li>
-                        <li>Developed CI/CD pipelines, automating deployment processes and reducing manual intervention by 60%</li>
-                    </ul>
                 </div>
-
                 <div class="timeline-item">
-                    <div class="job-header">
-                        <div>
-                            <div class="job-title">Senior Web Developer</div>
-                            <div class="company">Paythrough Software Solutions Pvt. Ltd</div>
+                    <div class="timeline-content">
+                        <div class="job-header">
+                            <div>
+                                <div class="job-title">Senior Web Developer</div>
+                                <div class="company">Paythrough Software Solutions Pvt. Ltd</div>
+                            </div>
+                            <div class="duration">Feb 2020 - Mar 2022</div>
                         </div>
-                        <div class="duration">Feb 2020 - Mar 2022</div>
+                        <ul class="job-description">
+                            <li>Designed and deployed custom AEPS and BBPS banking systems to streamline Aadhaar-based payments and video KYC processes</li>
+                            <li>Built modular, scalable banking solutions using PHP Laravel, React.js, Node.js, and Python Django</li>
+                            <li>Enhanced transaction success rates by 30% through rigorous system optimization, including load testing, database schema refinement, and reducing API latency with optimized caching</li>
+                        </ul>
                     </div>
-                    <ul class="job-description">
-                        <li>Designed and deployed custom AEPS and BBPS banking systems to streamline Aadhaar-based payments and video KYC processes</li>
-                        <li>Built modular, scalable banking solutions using PHP Laravel, React.js, Node.js, and Python Django</li>
-                        <li>Enhanced transaction success rates by 30% through rigorous system optimization, including load testing, database schema refinement, and reducing API latency with optimized caching</li>
-                    </ul>
                 </div>
-
                 <div class="timeline-item">
-                    <div class="job-header">
-                        <div>
-                            <div class="job-title">Junior Developer</div>
-                            <div class="company">Iotivity Communication Pvt. Ltd</div>
+                    <div class="timeline-content">
+                        <div class="job-header">
+                            <div>
+                                <div class="job-title">Junior Developer</div>
+                                <div class="company">Iotivity Communication Pvt. Ltd</div>
+                            </div>
+                            <div class="duration">Jan 2018 - Jan 2020</div>
                         </div>
-                        <div class="duration">Jan 2018 - Jan 2020</div>
+                        <ul class="job-description">
+                            <li>Engineered IoT-enabled platforms, including an embedded SIM management system and vehicle tracking system</li>
+                            <li>Developed and deployed REST APIs, enhancing communication between IoT devices and web applications</li>
+                            <li>Collaborated with cross-functional teams to deliver user-centric IoT solutions</li>
+                        </ul>
                     </div>
-                    <ul class="job-description">
-                        <li>Engineered IoT-enabled platforms, including an embedded SIM management system and vehicle tracking system</li>
-                        <li>Developed and deployed REST APIs, enhancing communication between IoT devices and web applications</li>
-                        <li>Collaborated with cross-functional teams to deliver user-centric IoT solutions</li>
-                    </ul>
                 </div>
             </div>
         </section>
-
         <section id="projects" class="container">
             <h2 class="section-title">Key Projects</h2>
             <div class="projects-grid">
@@ -796,7 +775,6 @@
                         <span class="tech-tag">Laravel</span>
                     </div>
                 </div>
-
                 <div class="project-card">
                     <div class="project-title">UNATION - Local Events Discovery Platform</div>
                     <div class="project-role">Team Lead</div>
@@ -813,7 +791,6 @@
                         <span class="tech-tag">Laravel</span>
                     </div>
                 </div>
-
                 <div class="project-card">
                     <div class="project-title">Matt Sleeps - E-Commerce Platform</div>
                     <div class="project-role">Team Lead</div>
@@ -828,7 +805,6 @@
                         <span class="tech-tag">AWS</span>
                     </div>
                 </div>
-
                 <div class="project-card">
                     <div class="project-title">Insurance Customer & Renewal Portals</div>
                     <div class="project-role">Team Lead</div>
@@ -842,7 +818,6 @@
                         <span class="tech-tag">Next.js</span>
                     </div>
                 </div>
-
                 <div class="project-card">
                     <div class="project-title">Banking & KYC Systems</div>
                     <div class="project-role">Senior Developer</div>
@@ -856,7 +831,6 @@
                         <span class="tech-tag">IoT Devices</span>
                     </div>
                 </div>
-
                 <div class="project-card">
                     <div class="project-title">Advanced Weather Station</div>
                     <div class="project-role">Senior Developer</div>
@@ -871,7 +845,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="achievements">
                 <h3>Key Achievements</h3>
                 <ul class="achievements-list">
@@ -882,7 +855,6 @@
                 </ul>
             </div>
         </section>
-
         <section id="education" class="container">
             <h2 class="section-title">Education & Certifications</h2>
             <div class="education-cert">
@@ -894,7 +866,6 @@
                         <span class="duration-edu">June 2009 - Aug 2012</span>
                     </div>
                 </div>
-                
                 <div class="cert-card">
                     <h3>Professional Certifications</h3>
                     <div class="cert-info">
@@ -919,19 +890,16 @@
                 </div>
             </div>
         </section>
-
         <section id="contact" class="contact-section">
             <div class="container">
                 <h2 class="section-title">Professional Contact</h2>
                 <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">Ready to discuss your next project or explore collaboration opportunities?</p>
-                
                 <div class="contact-grid">
                     <div class="contact-item">
                         <div class="contact-icon">✉️</div>
                         <h4>Email</h4>
                         <a href="mailto:sumitchatterjee502@gmail.com">sumitchatterjee502@gmail.com</a>
                     </div>
-                    
                     <div class="contact-item">
                         <div class="contact-icon">📞</div>
                         <h4>Phone</h4>
@@ -958,7 +926,7 @@
         </section>
     </main>
 
-    <script>
+        <script>
         // Mobile menu toggle
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
