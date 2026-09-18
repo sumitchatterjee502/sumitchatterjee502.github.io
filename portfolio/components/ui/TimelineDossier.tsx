@@ -56,7 +56,7 @@ export function TimelineDossier({
       ref={ref}
       id={meta.id}
       className={cn(
-        "career-dossier group relative scroll-mt-32 rounded-xl border bg-surface/80 p-6 backdrop-blur-sm transition-all duration-500 md:p-8",
+        "career-dossier group relative scroll-mt-24 rounded-xl border bg-surface/80 p-4 backdrop-blur-sm transition-all duration-500 sm:scroll-mt-32 sm:p-6 md:p-8",
         isActive
           ? "border-accent/40 shadow-[0_24px_60px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(0,212,170,0.15)]"
           : "border-border hover:border-accent/20",
@@ -69,8 +69,8 @@ export function TimelineDossier({
         {paddedIndex}
       </span>
 
-      <div className="relative flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
-        <div className="flex items-start gap-4 lg:w-56 lg:shrink-0 lg:flex-col lg:gap-5">
+      <div className="relative flex flex-col gap-5 sm:gap-6 lg:flex-row lg:items-start lg:gap-8">
+        <div className="flex items-start gap-3 sm:gap-4 lg:w-56 lg:shrink-0 lg:flex-col lg:gap-5">
           <div
             className={cn(
               "relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border font-display text-sm font-bold tracking-wide transition-colors duration-500",
@@ -106,7 +106,7 @@ export function TimelineDossier({
 
         <div className="min-w-0 flex-1 border-t border-border pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
           {entry.impact.length > 0 && (
-            <div className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
               {entry.impact.map((metric) => (
                 <div
                   key={metric}

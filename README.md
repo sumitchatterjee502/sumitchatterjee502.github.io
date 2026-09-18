@@ -616,7 +616,7 @@ npm run build
 | Sprint 2 — Layout & Core Sections | ✅ Complete | Navbar, Footer, Hero, About, Skills |
 | Sprint 3 — Projects & Experience | ✅ Complete | 14 projects with filters, 4-entry timeline |
 | Sprint 4 — Services, Contact & Interactions | ✅ Complete | mailto CTA, scroll reveal, mobile nav |
-| Sprint 5 — Responsive, SEO & Performance | 🟡 Partial | SEO metadata done; OG image + favicon still needed |
+| Sprint 5 — Responsive, SEO & Performance | ✅ Complete | Container layout, SEO, sitemap, robots, 404, OG SVG, favicon |
 | Sprint 6 — GitHub Pages Deployment | 🟡 Partial | Workflow created; needs push to `main` + Pages settings |
 
 ---

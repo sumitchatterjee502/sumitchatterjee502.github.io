@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { SiteContainer } from "@/components/layout/SiteContainer";
 import { navLinks, siteConfig } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
@@ -32,93 +33,164 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.classList.toggle("mobile-nav-open", menuOpen);
+    return () => document.body.classList.remove("mobile-nav-open");
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 768) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <nav
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-border bg-[rgba(2,11,24,0.88)] px-6 py-5 backdrop-blur-xl transition-all md:px-16",
-        scrolled && "py-3",
-      )}
-      aria-label="Main navigation"
-    >
-      <a
-        href="#hero"
-        className="font-display text-lg font-extrabold tracking-tight text-heading"
-      >
-        S<span className="text-accent">.</span>CHATTERJEE
-        <span className="text-accent">.</span>
-      </a>
-
-      <ul
+    <>
+      <nav
         className={cn(
-          "items-center gap-10",
-          menuOpen
-            ? "absolute left-0 right-0 top-[60px] z-40 flex flex-col gap-6 border-b border-border bg-surface p-8"
-            : "hidden md:flex",
+          "fixed inset-x-0 top-0 z-50 border-b border-border bg-[rgba(2,11,24,0.88)] py-4 backdrop-blur-xl transition-all",
+          scrolled && "py-3",
         )}
-        id="nav-links"
+        aria-label="Main navigation"
       >
-        {navLinks.map(({ label, href }) => {
-          const id = href.replace("#", "");
-          const isActive = activeSection === id;
-          return (
-            <li key={href}>
-              <a
-                href={href}
-                onClick={() => setMenuOpen(false)}
-                className={cn(
-                  "group relative font-mono text-[0.78rem] tracking-wider transition-colors",
-                  isActive ? "text-accent" : "text-muted hover:text-accent",
-                )}
-              >
-                {label}
-                <span
-                  className={cn(
-                    "absolute -bottom-0.5 left-0 h-px bg-accent transition-all",
-                    isActive ? "w-full" : "w-0 group-hover:w-full",
-                  )}
-                />
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-
-      <div className="flex items-center gap-4">
+        <SiteContainer className="flex items-center justify-between">
         <a
-          href={`mailto:${siteConfig.email}`}
-          className="hidden rounded border border-accent px-5 py-2 font-mono text-[0.75rem] tracking-wider text-accent transition-colors hover:bg-accent hover:text-background sm:inline-block"
+          href="#hero"
+          onClick={closeMenu}
+          className="font-display text-base font-extrabold tracking-tight text-heading sm:text-lg"
         >
-          Hire Me
+          <span className="sm:hidden">
+            SC<span className="text-accent">.</span>
+          </span>
+          <span className="hidden sm:inline">
+            S<span className="text-accent">.</span>CHATTERJEE
+            <span className="text-accent">.</span>
+          </span>
         </a>
 
+        <ul className="hidden items-center gap-8 md:flex lg:gap-10">
+          {navLinks.map(({ label, href }) => {
+            const id = href.replace("#", "");
+            const isActive = activeSection === id;
+            return (
+              <li key={href}>
+                <a
+                  href={href}
+                  className={cn(
+                    "group relative font-mono text-[0.78rem] tracking-wider transition-colors",
+                    isActive ? "text-accent" : "text-muted hover:text-accent",
+                  )}
+                >
+                  {label}
+                  <span
+                    className={cn(
+                      "absolute -bottom-0.5 left-0 h-px bg-accent transition-all",
+                      isActive ? "w-full" : "w-0 group-hover:w-full",
+                    )}
+                  />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="flex items-center gap-3">
+          <a
+            href={`mailto:${siteConfig.email}`}
+            className="hidden min-h-[44px] items-center rounded border border-accent px-4 py-2 font-mono text-[0.75rem] tracking-wider text-accent transition-colors hover:bg-accent hover:text-background sm:inline-flex lg:px-5"
+          >
+            Hire Me
+          </a>
+
+          <button
+            type="button"
+            className="inline-flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-1.5 md:hidden"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav-panel"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span
+              className={cn(
+                "block h-0.5 w-[22px] bg-text transition-transform duration-300",
+                menuOpen && "translate-y-[7px] rotate-45",
+              )}
+            />
+            <span
+              className={cn(
+                "block h-0.5 w-[22px] bg-text transition-opacity duration-300",
+                menuOpen && "opacity-0",
+              )}
+            />
+            <span
+              className={cn(
+                "block h-0.5 w-[22px] bg-text transition-transform duration-300",
+                menuOpen && "-translate-y-[7px] -rotate-45",
+              )}
+            />
+          </button>
+        </div>
+        </SiteContainer>
+      </nav>
+
+      {menuOpen && (
         <button
           type="button"
-          className="flex flex-col gap-1.5 md:hidden"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          aria-controls="nav-links"
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          <span
-            className={cn(
-              "block h-0.5 w-[22px] bg-text transition-transform",
-              menuOpen && "translate-y-2 rotate-45",
-            )}
-          />
-          <span
-            className={cn(
-              "block h-0.5 w-[22px] bg-text transition-opacity",
-              menuOpen && "opacity-0",
-            )}
-          />
-          <span
-            className={cn(
-              "block h-0.5 w-[22px] bg-text transition-transform",
-              menuOpen && "-translate-y-2 -rotate-45",
-            )}
-          />
-        </button>
+          aria-label="Close navigation menu"
+          className="fixed inset-0 z-40 bg-background/75 backdrop-blur-sm md:hidden"
+          onClick={closeMenu}
+        />
+      )}
+
+      <div
+        id="mobile-nav-panel"
+        className={cn(
+          "fixed inset-x-0 top-[60px] z-50 max-h-[calc(100dvh-60px)] overflow-y-auto border-b border-border bg-surface shadow-[0_24px_60px_rgba(0,0,0,0.45)] transition-all duration-300 md:hidden",
+          menuOpen
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-2 opacity-0",
+        )}
+        aria-hidden={!menuOpen}
+      >
+        <ul className="flex flex-col gap-1 p-4">
+          {navLinks.map(({ label, href }) => {
+            const id = href.replace("#", "");
+            const isActive = activeSection === id;
+            return (
+              <li key={href}>
+                <a
+                  href={href}
+                  onClick={closeMenu}
+                  className={cn(
+                    "flex min-h-[44px] items-center rounded-lg px-4 font-mono text-sm tracking-wider transition-colors",
+                    isActive
+                      ? "bg-accent/10 text-accent"
+                      : "text-muted hover:bg-surface-elevated hover:text-text",
+                  )}
+                >
+                  {label}
+                </a>
+              </li>
+            );
+          })}
+          <li className="mt-2 border-t border-border pt-3">
+            <a
+              href={`mailto:${siteConfig.email}`}
+              onClick={closeMenu}
+              className="flex min-h-[44px] items-center justify-center rounded-lg border border-accent bg-accent/10 px-4 font-mono text-sm tracking-wider text-accent transition-colors hover:bg-accent hover:text-background"
+            >
+              Hire Me
+            </a>
+          </li>
+        </ul>
       </div>
-    </nav>
+    </>
   );
 }

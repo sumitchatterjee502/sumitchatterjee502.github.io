@@ -29,6 +29,44 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  overflow-x: clip;
+}
+
+.section-shell {
+  isolation: isolate;
+}
+
+.section-container {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+}
+
+.filter-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin-inline: -0.25rem;
+  padding-bottom: 0.25rem;
+  padding-inline: 0.25rem;
+}
+
+.filter-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .filter-scroll {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -58,7 +96,13 @@ body {
   color: var(--text);
   font-family: var(--font-dm-sans), system-ui, sans-serif;
   line-height: 1.7;
-  overflow-x: hidden;
+  overflow-x: clip;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+body.mobile-nav-open {
+  overflow: hidden;
 }
 
 ::selection {

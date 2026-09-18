@@ -121,7 +121,7 @@ export function ProjectCard({
         <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
           <ProjectVisual project={project} variant="spotlight" />
 
-          <div className="relative p-6 md:p-8">
+          <div className="relative p-5 sm:p-6 md:p-8">
             <span
               aria-hidden="true"
               className="pointer-events-none absolute right-4 top-2 font-display text-6xl font-extrabold text-heading/[0.03]"
@@ -129,7 +129,7 @@ export function ProjectCard({
               {paddedIndex}
             </span>
 
-            <h3 className="relative max-w-xl font-display text-2xl font-bold leading-tight text-heading md:text-[1.7rem]">
+            <h3 className="relative max-w-xl pr-10 font-display text-xl font-bold leading-tight text-heading sm:pr-0 sm:text-2xl md:text-[1.7rem]">
               {project.title}
             </h3>
 

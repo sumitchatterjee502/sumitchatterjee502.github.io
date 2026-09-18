@@ -70,7 +70,7 @@ export function SkillGroupCard({ group, index }: SkillGroupCardProps) {
           {meta.description}
         </p>
 
-        <ul className="grid gap-2 sm:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {group.skills.map((skill) => (
             <li
               key={skill}
