@@ -205,12 +205,14 @@ export interface Project {
   image?: string;
   liveUrl?: string;
   repoUrl?: string;
+  featured?: boolean;
 }
 
 export const projects: Project[] = [
   {
     id: "indigo-kiosk",
     category: "Fintech",
+    featured: true,
     title: "Indigo Kiosk Admin Portal",
     role: "Team Lead / Full-Stack Developer",
     description:
@@ -255,6 +257,7 @@ export const projects: Project[] = [
   {
     id: "sis",
     category: "Enterprise",
+    featured: true,
     title: "SIS",
     role: "Team Lead / Full-Stack Developer / Project Manager",
     description:
@@ -337,6 +340,7 @@ export const projects: Project[] = [
   {
     id: "senditto",
     category: "Fintech",
+    featured: true,
     title: "Senditto",
     role: "Team Lead",
     description:
@@ -522,43 +526,180 @@ export const experience = [
   },
 ];
 
-export const services = [
+export type ServiceCategory =
+  | "All"
+  | "Development"
+  | "Integration"
+  | "Infrastructure"
+  | "Consulting";
+
+export interface Service {
+  id: string;
+  title: string;
+  description: string;
+  category: Exclude<ServiceCategory, "All">;
+  capabilities: string[];
+  technologies: string[];
+  featured?: boolean;
+}
+
+export const serviceCategories: ServiceCategory[] = [
+  "All",
+  "Development",
+  "Integration",
+  "Infrastructure",
+  "Consulting",
+];
+
+export const engagementProcess = [
   {
+    step: "01",
+    title: "Discovery",
+    description: "Understand goals, constraints, users, and success metrics.",
+  },
+  {
+    step: "02",
+    title: "Architecture",
+    description: "Define system design, tech stack, milestones, and delivery plan.",
+  },
+  {
+    step: "03",
+    title: "Build",
+    description: "Iterative development with reviews, demos, and quality gates.",
+  },
+  {
+    step: "04",
+    title: "Deploy",
+    description: "CI/CD setup, cloud deployment, monitoring, and handover.",
+  },
+  {
+    step: "05",
+    title: "Support",
+    description: "Post-launch optimization, scaling guidance, and iteration.",
+  },
+] as const;
+
+export const services: Service[] = [
+  {
+    id: "custom-software",
+    title: "Custom Software Development",
+    description:
+      "Bespoke web and enterprise applications built around your business logic — from greenfield MVPs to production platforms handling millions of requests across insurance, fintech, banking, and IoT.",
+    category: "Development",
+    featured: true,
+    capabilities: [
+      "Domain-specific platform engineering",
+      "Admin portals, client dashboards & operational tools",
+      "Microservices and modular monolith architectures",
+      "Role-based access, workflows & business rule engines",
+      "MVP scoping through production hardening",
+      "Team-led delivery with clear milestones",
+    ],
+    technologies: [
+      "React",
+      "Next.js",
+      "Node.js",
+      "NestJS",
+      "PHP",
+      "Laravel",
+      ".NET",
+      "TypeScript",
+    ],
+  },
+  {
+    id: "full-stack",
     title: "Full-Stack Web Development",
     description:
       "End-to-end application development with React, Next.js, Node.js, and PHP — from architecture to production deployment.",
+    category: "Development",
+    capabilities: [
+      "Frontend + backend ownership",
+      "Responsive, accessible UI implementation",
+      "Production-ready deployment pipelines",
+    ],
+    technologies: ["React", "Next.js", "Node.js", "PHP", "Tailwind CSS"],
   },
   {
+    id: "nextjs",
     title: "Next.js Application Development",
     description:
       "Modern, performant web applications with server-side rendering patterns, static export, and optimized user experiences.",
+    category: "Development",
+    capabilities: [
+      "App Router & static export setups",
+      "Performance and SEO optimization",
+      "Component-driven UI architecture",
+    ],
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
   },
   {
+    id: "api-integration",
     title: "API Development & Integration",
     description:
       "RESTful microservices, third-party integrations (payments, OCR, maps), and real-time systems with WebSocket and MQTT.",
+    category: "Integration",
+    capabilities: [
+      "REST API design & documentation",
+      "Payment gateway & OCR integrations",
+      "Real-time event systems",
+    ],
+    technologies: ["Node.js", "Express.js", "Strapi", "Socket.io", "MQTT"],
   },
   {
+    id: "backend",
     title: "Backend System Development",
     description:
       "Scalable backend architectures with Node.js, NestJS, Laravel, and .NET — designed for high availability and 1M+ daily requests.",
+    category: "Development",
+    capabilities: [
+      "High-availability service design",
+      "Authentication & authorization layers",
+      "Queue, cache & background job systems",
+    ],
+    technologies: ["Node.js", "NestJS", "Laravel", ".NET", "Redis", "BullMQ"],
   },
   {
+    id: "database",
     title: "Database Design",
     description:
       "Schema design, query optimization, caching strategies with Redis, and data layer architecture for MySQL, PostgreSQL, and MongoDB.",
+    category: "Infrastructure",
+    capabilities: [
+      "Relational & document schema design",
+      "Query tuning & indexing strategy",
+      "Caching and data access patterns",
+    ],
+    technologies: ["MySQL", "PostgreSQL", "MongoDB", "Redis", "Prisma"],
   },
   {
+    id: "modernization",
     title: "Application Modernization",
     description:
       "Legacy system migration, CI/CD pipeline implementation, containerization with Docker, and cloud deployment on Azure and AWS.",
+    category: "Infrastructure",
+    capabilities: [
+      "Legacy codebase assessment",
+      "Incremental migration planning",
+      "Docker & cloud deployment",
+    ],
+    technologies: ["Docker", "CI/CD", "Azure", "AWS", "Git"],
   },
   {
+    id: "consulting",
     title: "Technical Consulting",
     description:
       "Architecture reviews, team mentoring, technical standards establishment, and delivery coordination for complex platforms.",
+    category: "Consulting",
+    capabilities: [
+      "Architecture & code review",
+      "Team mentoring & standards",
+      "Delivery planning & risk reduction",
+    ],
+    technologies: ["Microservices", "Agile", "CI/CD", "Cloud"],
   },
-] as const;
+];
+
+export const featuredService = services.find((service) => service.featured)!;
 
 export const projectCategories: ProjectCategory[] = [
   "All",
@@ -571,3 +712,9 @@ export const projectCategories: ProjectCategory[] = [
   "Manufacturing",
   "Events",
 ];
+
+export const projectPortfolioStats = {
+  totalProjects: projects.length,
+  domainCount: projectCategories.length - 1,
+  featuredCount: projects.filter((project) => project.featured).length,
+} as const;
