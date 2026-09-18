@@ -11,7 +11,7 @@ export interface CategoryStyle {
 const categoryStyles: Record<ProjectDomain, CategoryStyle> = {
   Fintech: {
     gradient: "from-accent/25 via-accent/10 to-transparent",
-    glow: "rgba(0,212,170,0.15)",
+    glow: "rgba(var(--accent-rgb), 0.15)",
     label: "text-accent",
   },
   Enterprise: {
@@ -26,7 +26,7 @@ const categoryStyles: Record<ProjectDomain, CategoryStyle> = {
   },
   Banking: {
     gradient: "from-emerald-400/15 via-accent/10 to-transparent",
-    glow: "rgba(0,212,170,0.12)",
+    glow: "rgba(var(--accent-rgb), 0.12)",
     label: "text-emerald-300",
   },
   IoT: {

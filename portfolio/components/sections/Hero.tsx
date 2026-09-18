@@ -20,7 +20,7 @@ export function Hero() {
     >
       <div className="hero-grid-bg absolute inset-0" aria-hidden="true" />
       <div
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[min(600px,80vw)] w-[min(600px,80vw)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,212,170,0.12)_0%,transparent_70%)]"
+        className="hero-glow pointer-events-none absolute left-1/2 top-1/2 h-[min(600px,80vw)] w-[min(600px,80vw)] -translate-x-1/2 -translate-y-1/2 rounded-full"
         aria-hidden="true"
       />
 
@@ -117,7 +117,7 @@ export function Hero() {
           style={{ animationDelay: "1.1s" }}
           aria-hidden="true"
         >
-          <div className="relative flex h-[200px] w-[200px] items-center justify-center rounded-full border border-accent/20 bg-[radial-gradient(circle,rgba(0,144,255,0.12)_0%,rgba(0,212,170,0.06)_60%,transparent_100%)]">
+          <div className="hero-orb relative flex h-[200px] w-[200px] items-center justify-center rounded-full border border-accent/20">
             <div className="text-center">
               <div className="gradient-text font-display text-5xl font-extrabold leading-none">
                 9+

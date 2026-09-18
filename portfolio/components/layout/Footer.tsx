@@ -1,4 +1,5 @@
 import { SiteContainer } from "@/components/layout/SiteContainer";
+import { ThemeSwitcher } from "@/components/theme/ThemeSwitcher";
 import { navLinks, siteConfig } from "@/data/portfolio";
 
 export function Footer() {
@@ -7,8 +8,8 @@ export function Footer() {
   );
 
   return (
-    <footer className="border-t border-border bg-[rgba(4,14,30,0.9)] py-8 sm:py-10">
-      <SiteContainer className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+    <footer className="border-t border-border bg-[var(--footer-bg)] py-8 sm:py-10">
+      <SiteContainer className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
         <p className="font-mono text-[0.72rem] leading-relaxed text-muted">
           © {new Date().getFullYear()} {siteConfig.name} · Engineering Leader ·
           Built with precision.
@@ -45,6 +46,7 @@ export function Footer() {
             </a>
           </li>
         </ul>
+        <ThemeSwitcher />
       </SiteContainer>
     </footer>
   );

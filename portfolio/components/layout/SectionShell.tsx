@@ -12,19 +12,14 @@ interface SectionShellProps {
   stackClassName?: string;
 }
 
-const toneStyles: Record<
-  SectionTone,
-  { section: string; wash: string }
-> = {
+const toneStyles: Record<SectionTone, { section: string; wash: string }> = {
   default: {
-    section: "bg-background",
-    wash:
-      "radial-gradient(circle at 20% 20%, rgba(0,212,170,0.07), transparent 32%), radial-gradient(circle at 85% 75%, rgba(77,166,255,0.06), transparent 28%)",
+    section: "bg-[var(--section-default-bg)] backdrop-blur-[2px]",
+    wash: "section-wash-default",
   },
   elevated: {
-    section: "bg-[rgba(6,18,38,0.75)]",
-    wash:
-      "radial-gradient(circle at 10% 15%, rgba(0,212,170,0.08), transparent 30%), radial-gradient(circle at 90% 80%, rgba(77,166,255,0.06), transparent 28%)",
+    section: "bg-[var(--section-elevated-bg)] backdrop-blur-[2px]",
+    wash: "section-wash-elevated",
   },
 };
 
@@ -44,9 +39,11 @@ export function SectionShell({
       aria-labelledby={`${id}-heading`}
     >
       <div
-        className="pointer-events-none absolute inset-0 opacity-35"
+        className={cn(
+          "pointer-events-none absolute inset-0 opacity-35",
+          styles.wash,
+        )}
         aria-hidden="true"
-        style={{ backgroundImage: styles.wash }}
       />
       <SectionContainer>
         <div className={cn(sectionStackClass, stackClassName)}>{children}</div>

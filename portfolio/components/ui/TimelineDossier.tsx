@@ -58,7 +58,7 @@ export function TimelineDossier({
       className={cn(
         "career-dossier group relative scroll-mt-24 rounded-xl border bg-surface/80 p-4 backdrop-blur-sm transition-all duration-500 sm:scroll-mt-32 sm:p-6 md:p-8",
         isActive
-          ? "border-accent/40 shadow-[0_24px_60px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(0,212,170,0.15)]"
+          ? "border-accent/40 shadow-dossier-active"
           : "border-border hover:border-accent/20",
       )}
     >
@@ -75,7 +75,7 @@ export function TimelineDossier({
             className={cn(
               "relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border font-display text-sm font-bold tracking-wide transition-colors duration-500",
               isActive
-                ? "border-accent/50 bg-accent/10 text-accent shadow-[0_0_30px_rgba(0,212,170,0.15)]"
+                ? "border-accent/50 bg-accent/10 text-accent shadow-accent-soft"
                 : "border-border bg-surface-elevated text-heading group-hover:border-accent/30",
             )}
           >

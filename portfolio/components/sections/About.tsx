@@ -63,7 +63,7 @@ export function About() {
               </div>
             </div>
 
-            <div className="flex flex-col justify-between bg-[linear-gradient(180deg,rgba(0,212,170,0.05)_0%,rgba(7,21,37,0.2)_100%)] p-5 sm:p-7 md:p-10">
+            <div className="panel-accent-wash flex flex-col justify-between p-5 sm:p-7 md:p-10">
               <div>
                 <p className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-accent">
                   Profile

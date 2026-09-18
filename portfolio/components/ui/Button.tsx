@@ -13,7 +13,7 @@ interface ButtonProps {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-accent text-background hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(0,212,170,0.3)]",
+    "primary-shadow-hover bg-accent text-background hover:-translate-y-0.5",
   outline:
     "border border-border text-text hover:border-accent hover:text-accent hover:-translate-y-0.5",
 };

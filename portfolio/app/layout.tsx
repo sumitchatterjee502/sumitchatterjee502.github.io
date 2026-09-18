@@ -5,7 +5,9 @@ import { siteConfig } from "@/data/portfolio";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { ThemeScript } from "@/components/theme/ThemeScript";
 import { seoConfig } from "@/lib/seo";
+import { defaultTheme } from "@/lib/theme";
 import "./globals.css";
 
 const syne = Syne({
@@ -88,8 +90,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-theme={defaultTheme}
+      suppressHydrationWarning
       className={`${syne.variable} ${dmSans.variable} ${dmMono.variable} h-full antialiased`}
     >
+      <head>
+        <ThemeScript />
+      </head>
       <body className="flex min-h-full flex-col font-sans">
         <JsonLd />
         <Navbar />

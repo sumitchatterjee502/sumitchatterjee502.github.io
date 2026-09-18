@@ -55,7 +55,7 @@ export function Navbar() {
     <>
       <nav
         className={cn(
-          "fixed inset-x-0 top-0 z-50 border-b border-border bg-[rgba(2,11,24,0.88)] py-4 backdrop-blur-xl transition-all",
+          "fixed inset-x-0 top-0 z-50 border-b border-border bg-[var(--nav-bg)] py-4 backdrop-blur-xl transition-all",
           scrolled && "py-3",
         )}
         aria-label="Main navigation"

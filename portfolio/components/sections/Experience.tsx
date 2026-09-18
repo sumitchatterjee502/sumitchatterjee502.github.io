@@ -118,7 +118,7 @@ export function Experience() {
               className={cn(
                 "career-segment absolute top-1/2 h-3 min-w-[12px] -translate-y-1/2 rounded-full transition-all duration-300",
                 activeId === segment.id
-                  ? "z-10 bg-accent shadow-[0_0_18px_rgba(0,212,170,0.55)]"
+                  ? "z-10 bg-accent shadow-accent-segment"
                   : "bg-accent-blue/70 hover:bg-accent/80",
               )}
               style={{
