@@ -17,12 +17,15 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: portfolio
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        id: pages
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -32,6 +35,7 @@ jobs:
           cache-dependency-path: portfolio/package-lock.json
 
       - name: Install and build static export
+        working-directory: portfolio
         run: |
           npm ci
           npm run build
@@ -39,12 +43,32 @@ jobs:
           NEXT_PUBLIC_CONTACT_API_URL: ${{ secrets.CONTACT_API_URL }}
 
       - name: Verify export output
+        working-directory: portfolio
         run: |
           test -f out/index.html || (echo "Missing portfolio/out/index.html" && exit 1)
           grep -q "Sumit Chatterjee" out/index.html || (echo "Export does not look like the portfolio" && exit 1)
           test -f out/.nojekyll || touch out/.nojekyll
           echo "Export files:"
           ls -la out | head -15
+
+      - name: Publish site to main branch root
+        run: |
+          shopt -s dotglob nullglob
+          for item in portfolio/out/*; do
+            name="$(basename "$item")"
+            rm -rf "$name"
+            cp -r "$item" "./$name"
+          done
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html 404.html _not-found.html favicon.ico icon.svg robots.txt sitemap.xml og-cover.svg .nojekyll index.txt _not-found.txt file.svg globe.svg next.svg vercel.svg window.svg __next.*.txt _next _not-found
+          if git diff --staged --quiet; then
+            echo "No site changes to commit on main."
+          else
+            git commit -m "deploy: publish site to main root [skip ci]"
+            git push origin main
+          fi
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
