@@ -5,7 +5,6 @@ import {
   projectCategories,
   projectPortfolioStats,
   projects,
-  siteConfig,
   type ProjectCategory,
 } from "@/data/portfolio";
 import { SectionShell } from "@/components/layout/SectionShell";
@@ -45,8 +44,6 @@ export function Projects() {
 
     return list;
   }, [activeCategory]);
-
-  const mailtoHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent("Project Inquiry")}&body=${encodeURIComponent("Hi Sumit,\n\nI'd like to discuss a project similar to your portfolio work.\n\n")}`;
 
   return (
     <SectionShell id="projects">
@@ -197,7 +194,14 @@ export function Projects() {
               approach.
             </p>
           </div>
-          <Button href={mailtoHref}>Discuss a Similar Project →</Button>
+          <Button
+            contactIntent={{
+              subject: "Similar Project Inquiry",
+              source: "Projects",
+            }}
+          >
+            Discuss a Similar Project →
+          </Button>
         </div>
       </RevealOnScroll>
     </SectionShell>

@@ -31,11 +31,6 @@ const contactLinks = [
 ];
 
 export function Contact() {
-  const mailtoSubject = encodeURIComponent("Freelance Inquiry");
-  const mailtoBody = encodeURIComponent(
-    "Hi Sumit,\n\nI'm reaching out regarding a project opportunity.\n\n",
-  );
-
   return (
     <SectionShell id="contact">
       <SectionHeading
@@ -89,11 +84,15 @@ export function Contact() {
               Start a conversation
             </h3>
             <p className="mb-6 text-sm font-light leading-relaxed text-muted">
-              No backend form required — send a direct email with your project
-              details. I typically respond within 1–2 business days.
+              Fill in your details and project query in the popup form. Your
+              message will be sent directly to my inbox — I typically respond
+              within 1–2 business days.
             </p>
             <Button
-              href={`mailto:${siteConfig.email}?subject=${mailtoSubject}&body=${mailtoBody}`}
+              contactIntent={{
+                subject: "Freelance Inquiry",
+                source: "Contact Section",
+              }}
             >
               Send Freelance Inquiry →
             </Button>

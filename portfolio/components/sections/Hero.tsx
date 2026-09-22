@@ -84,7 +84,13 @@ export function Hero() {
             style={{ animationDelay: "0.95s" }}
           >
             <Button href="#projects">View My Projects →</Button>
-            <Button href="#contact" variant="outline">
+            <Button
+              contactIntent={{
+                subject: "Contact Me — Portfolio Inquiry",
+                source: "Hero",
+              }}
+              variant="outline"
+            >
               Contact Me
             </Button>
             <Button href={siteConfig.github} variant="outline" external>

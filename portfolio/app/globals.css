@@ -146,8 +146,32 @@ body {
   padding-right: env(safe-area-inset-right, 0px);
 }
 
-body.mobile-nav-open {
+body.mobile-nav-open,
+body.contact-modal-open {
   overflow: hidden;
+}
+
+.contact-field {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--surface-elevated) 80%, transparent);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: var(--text);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.contact-field::placeholder {
+  color: color-mix(in oklab, var(--muted) 85%, transparent);
+}
+
+.contact-field:focus {
+  border-color: color-mix(in oklab, var(--accent) 55%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 15%, transparent);
 }
 
 ::selection {

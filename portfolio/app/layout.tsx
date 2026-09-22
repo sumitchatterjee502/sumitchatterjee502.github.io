@@ -3,6 +3,7 @@ import { DM_Mono, DM_Sans, Syne } from "next/font/google";
 import Script from "next/script";
 import { siteConfig } from "@/data/portfolio";
 import { Navbar } from "@/components/layout/Navbar";
+import { ContactFormProvider } from "@/components/contact/ContactFormProvider";
 import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ThemeScript } from "@/components/theme/ThemeScript";
@@ -98,12 +99,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ThemeScript />
       </head>
       <body className="flex min-h-full flex-col font-sans">
-        <JsonLd />
-        <Navbar />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <ContactFormProvider>
+          <JsonLd />
+          <Navbar />
+          <main id="main-content" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </ContactFormProvider>
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.analyticsId}`}
           strategy="afterInteractive"

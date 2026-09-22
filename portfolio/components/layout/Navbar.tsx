@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useContactForm } from "@/components/contact/ContactFormProvider";
 import { SiteContainer } from "@/components/layout/SiteContainer";
-import { navLinks, siteConfig } from "@/data/portfolio";
+import { navLinks } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
+  const { openContactForm } = useContactForm();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
@@ -102,12 +104,18 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-3">
-          <a
-            href={`mailto:${siteConfig.email}`}
+          <button
+            type="button"
+            onClick={() =>
+              openContactForm({
+                subject: "Hire Me — Portfolio Inquiry",
+                source: "Navbar",
+              })
+            }
             className="hidden min-h-[44px] items-center rounded border border-accent px-4 py-2 font-mono text-[0.75rem] tracking-wider text-accent transition-colors hover:bg-accent hover:text-background sm:inline-flex lg:px-5"
           >
             Hire Me
-          </a>
+          </button>
 
           <button
             type="button"
@@ -181,13 +189,19 @@ export function Navbar() {
             );
           })}
           <li className="mt-2 border-t border-border pt-3">
-            <a
-              href={`mailto:${siteConfig.email}`}
-              onClick={closeMenu}
-              className="flex min-h-[44px] items-center justify-center rounded-lg border border-accent bg-accent/10 px-4 font-mono text-sm tracking-wider text-accent transition-colors hover:bg-accent hover:text-background"
+            <button
+              type="button"
+              onClick={() => {
+                closeMenu();
+                openContactForm({
+                  subject: "Hire Me — Portfolio Inquiry",
+                  source: "Mobile Navbar",
+                });
+              }}
+              className="flex min-h-[44px] w-full items-center justify-center rounded-lg border border-accent bg-accent/10 px-4 font-mono text-sm tracking-wider text-accent transition-colors hover:bg-accent hover:text-background"
             >
               Hire Me
-            </a>
+            </button>
           </li>
         </ul>
       </div>

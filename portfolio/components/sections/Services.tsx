@@ -6,7 +6,6 @@ import {
   featuredService,
   serviceCategories,
   services,
-  siteConfig,
   type ServiceCategory,
 } from "@/data/portfolio";
 import { SectionShell } from "@/components/layout/SectionShell";
@@ -32,8 +31,6 @@ export function Services() {
       ),
     [activeCategory],
   );
-
-  const mailtoHref = `mailto:${siteConfig.email}?subject=${encodeURIComponent("Custom Software Development Inquiry")}&body=${encodeURIComponent("Hi Sumit,\n\nI'm interested in custom software development services.\n\nProject overview:\n\n")}`;
 
   return (
     <SectionShell id="services">
@@ -136,7 +133,14 @@ export function Services() {
                 </div>
 
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                  <Button href={mailtoHref}>Discuss Your Project →</Button>
+                  <Button
+                    contactIntent={{
+                      subject: "Custom Software Development Inquiry",
+                      source: "Services — Flagship",
+                    }}
+                  >
+                    Discuss Your Project →
+                  </Button>
                   <Button href="#projects" variant="outline">
                     View Work
                   </Button>
@@ -206,7 +210,14 @@ export function Services() {
               modernization initiative? Share your requirements and I&apos;ll
               respond with next steps.
             </p>
-            <Button href={mailtoHref}>Start a Project Conversation →</Button>
+            <Button
+              contactIntent={{
+                subject: "Start a Project Conversation",
+                source: "Services — Engagement",
+              }}
+            >
+              Start a Project Conversation →
+            </Button>
           </div>
         </div>
       </RevealOnScroll>
