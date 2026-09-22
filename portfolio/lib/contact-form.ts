@@ -18,13 +18,18 @@ export interface ContactSubmitResult {
 }
 
 function getContactApiUrl(): string {
-  const configured = process.env.NEXT_PUBLIC_CONTACT_API_URL?.trim();
+  const fromEnv = process.env.NEXT_PUBLIC_CONTACT_API_URL?.trim();
+  const fromConfig = siteConfig.contactApiUrl?.trim();
 
-  if (configured) {
-    return configured.replace(/\/$/, "");
-  }
+  // Production builds use siteConfig unless env points to a real (non-local) API URL.
+  const url =
+    process.env.NODE_ENV === "production"
+      ? fromEnv && !fromEnv.includes("localhost")
+        ? fromEnv
+        : fromConfig
+      : fromEnv || fromConfig;
 
-  return "";
+  return url ? url.replace(/\/$/, "") : "";
 }
 
 export async function submitContactForm(
