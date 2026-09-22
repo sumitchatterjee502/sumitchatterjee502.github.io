@@ -1,0 +1,43 @@
+name: Configure GitHub Pages Source
+
+# Run once manually if the live site shows README or 404.
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: "Pages source"
+        required: true
+        default: "github-actions"
+        type: choice
+        options:
+          - github-actions
+          - gh-pages
+
+permissions:
+  pages: write
+
+jobs:
+  configure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use GitHub Actions deployment
+        if: inputs.source == 'github-actions'
+        run: |
+          curl -fsSL -X PUT \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${{ github.repository }}/pages" \
+            -d '{"build_type":"workflow"}'
+          echo "Pages source set to GitHub Actions."
+
+      - name: Use gh-pages branch deployment
+        if: inputs.source == 'gh-pages'
+        run: |
+          curl -fsSL -X PUT \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${{ github.repository }}/pages" \
+            -d '{"build_type":"legacy","source":{"branch":"gh-pages","path":"/"}}'
+          echo "Pages source set to gh-pages branch."
