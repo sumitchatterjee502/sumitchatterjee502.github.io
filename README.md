@@ -579,7 +579,14 @@ The workflow **builds `portfolio/out/`** and publishes it to the **`gh-pages` br
 | `main` | Source code + this README (documentation only) |
 | `gh-pages` | **Live portfolio** served at [sumitchatterjee502.github.io](https://sumitchatterjee502.github.io/) |
 
-If the site ever shows this README again: **Settings → Pages → Source → Deploy from branch → `gh-pages` → `/ (root)`**, then re-run the deploy workflow.
+**If you see README or 404:**
+
+1. Repo → **Actions** → **Configure GitHub Pages Source** → **Run workflow** → choose **`github-actions`** → Run  
+2. Then run **Deploy to GitHub Pages** workflow (or push to `main`)  
+3. Wait 1–2 minutes, hard refresh (`Ctrl+Shift+R`)
+
+Manual alternative: **Settings → Pages → Source → GitHub Actions** (recommended)  
+Or: **Deploy from branch → `gh-pages` → `/ (root)`**
 
 ### Prerequisites
 
