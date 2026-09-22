@@ -6,20 +6,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
-  id-token: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: portfolio
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,33 +27,36 @@ jobs:
           cache: npm
           cache-dependency-path: portfolio/package-lock.json
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build static export
-        run: npm run build
+      - name: Install and build static export
+        working-directory: portfolio
+        run: |
+          npm ci
+          npm run build
         env:
           NEXT_PUBLIC_CONTACT_API_URL: ${{ secrets.CONTACT_API_URL }}
 
-      - name: Prepare GitHub Pages artifact
+      - name: Verify export output
+        working-directory: portfolio
         run: |
-          test -f out/index.html || (echo "Missing out/index.html — static export failed" && exit 1)
-          touch out/.nojekyll
-          echo "Static export ready:"
-          ls -la out | head -20
+          test -f out/index.html || (echo "Missing portfolio/out/index.html" && exit 1)
+          grep -q "Sumit Chatterjee" out/index.html || (echo "Export does not look like the portfolio" && exit 1)
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Publish site to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: portfolio/out
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: portfolio/out
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: "deploy: portfolio static export"
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Configure Pages to use gh-pages branch
+        continue-on-error: true
+        run: |
+          curl -fsSL -X PUT \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${{ github.repository }}/pages" \
+            -d '{"build_type":"legacy","source":{"branch":"gh-pages","path":"/"}}'
+          echo "GitHub Pages source set to gh-pages branch."

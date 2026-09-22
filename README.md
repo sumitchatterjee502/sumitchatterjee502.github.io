@@ -1,5 +1,7 @@
 # Sumit Chatterjee — Portfolio Migration
 
+> **Live portfolio:** [https://sumitchatterjee502.github.io/](https://sumitchatterjee502.github.io/) (deployed from the `gh-pages` branch — not this README)
+
 > Transforming the legacy single-page HTML portfolio into a modern Next.js application, deployed statically to GitHub Pages.
 
 **Live target:** [https://sumitchatterjee502.github.io/](https://sumitchatterjee502.github.io/)  
@@ -568,24 +570,22 @@ Original HTML preserved at **`legacy-backup/backupindex.html`**. Do not delete o
 
 ## GitHub Pages Deployment
 
-### Fix: site shows README instead of portfolio
+### How deployment works (permanent)
 
-If [sumitchatterjee502.github.io](https://sumitchatterjee502.github.io/) shows the migration README, GitHub Pages is deploying the **repo root** (Jekyll + `README.md`) instead of the Next.js build.
+The workflow **builds `portfolio/out/`** and publishes it to the **`gh-pages` branch**, then sets Pages to use that branch automatically.
 
-**Fix (one time):**
+| Branch | Purpose |
+|--------|---------|
+| `main` | Source code + this README (documentation only) |
+| `gh-pages` | **Live portfolio** served at [sumitchatterjee502.github.io](https://sumitchatterjee502.github.io/) |
 
-1. GitHub repo → **Settings** → **Pages**
-2. Under **Build and deployment** → **Source**, select **GitHub Actions** (not “Deploy from a branch”)
-3. Push to `main` or re-run **Deploy to GitHub Pages** under **Actions**
-
-The workflow builds `portfolio/out/` and publishes that artifact. The root `README.md` is documentation only — it is not the live site.
+If the site ever shows this README again: **Settings → Pages → Source → Deploy from branch → `gh-pages` → `/ (root)`**, then re-run the deploy workflow.
 
 ### Prerequisites
 
-1. Repository settings → Pages → Source: **GitHub Actions**
-2. Push workflow from Sprint 6
-3. Ensure `portfolio/next.config.ts` has `output: "export"`
-4. Optional: GitHub secret **`CONTACT_API_URL`** for the contact form API (Render deploy)
+1. Push to `main` triggers deploy (or run **Deploy to GitHub Pages** manually)
+2. `portfolio/next.config.ts` has `output: "export"`
+3. Optional: GitHub secret **`CONTACT_API_URL`** for the contact form API (Render deploy)
 
 ### Manual deploy (if needed)
 
@@ -630,7 +630,7 @@ npm run build
 | Sprint 3 — Projects & Experience | ✅ Complete | 14 projects with filters, 4-entry timeline |
 | Sprint 4 — Services, Contact & Interactions | ✅ Complete | mailto CTA, scroll reveal, mobile nav |
 | Sprint 5 — Responsive, SEO & Performance | ✅ Complete | Container layout, SEO, sitemap, robots, 404, OG SVG, favicon |
-| Sprint 6 — GitHub Pages Deployment | 🟡 Partial | Workflow ready — set Pages source to **GitHub Actions** (see below) |
+| Sprint 6 — GitHub Pages Deployment | ✅ Complete | Deploys to `gh-pages` branch on every push to `main` |
 
 ---
 
