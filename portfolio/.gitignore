@@ -18,7 +18,7 @@
 
 
 # production
-
+/out
 
 # misc
 .DS_Store

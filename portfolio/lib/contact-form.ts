@@ -24,10 +24,6 @@ function getContactApiUrl(): string {
     return configured.replace(/\/$/, "");
   }
 
-  if (typeof window !== "undefined") {
-    return window.location.origin;
-  }
-
   return "";
 }
 
