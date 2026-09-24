@@ -48,21 +48,24 @@ jobs:
           test -f out/index.html || (echo "Missing portfolio/out/index.html" && exit 1)
           grep -q "Sumit Chatterjee" out/index.html || (echo "Export does not look like the portfolio" && exit 1)
           test -f out/.nojekyll || touch out/.nojekyll
+          test -f out/hero-tech-hardware-bg.png || (echo "Missing hero background asset in export (portfolio/public)" && exit 1)
           echo "Export files:"
-          ls -la out | head -15
+          ls -la out | head -20
 
       - name: Publish site to main branch root
         run: |
           shopt -s dotglob nullglob
+          deploy_paths=()
           for item in portfolio/out/*; do
             name="$(basename "$item")"
             rm -rf "$name"
             cp -r "$item" "./$name"
+            deploy_paths+=("$name")
           done
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html 404.html _not-found.html favicon.ico icon.svg robots.txt sitemap.xml og-cover.svg .nojekyll index.txt _not-found.txt file.svg globe.svg next.svg vercel.svg window.svg __next.*.txt _next _not-found
+          git add -- "${deploy_paths[@]}"
           if git diff --staged --quiet; then
             echo "No site changes to commit on main."
           else
