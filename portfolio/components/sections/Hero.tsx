@@ -1,5 +1,6 @@
+import Image from "next/image";
 import { SiteContainer } from "@/components/layout/SiteContainer";
-import { heroStats, siteConfig } from "@/data/portfolio";
+import { heroBackgroundImage, heroStats, siteConfig } from "@/data/portfolio";
 import { Button } from "@/components/ui/Button";
 import { mobileButtonRowClass, sectionShellClass } from "@/lib/layout";
 import { cn } from "@/lib/utils";
@@ -18,9 +19,23 @@ export function Hero() {
       className={`${sectionShellClass} relative flex min-h-[100svh] items-center pb-12 pt-28 sm:pb-16 sm:pt-32 md:pt-36`}
       aria-labelledby="hero-heading"
     >
-      <div className="hero-grid-bg absolute inset-0" aria-hidden="true" />
+      <div className="hero-photo-bg absolute inset-0" aria-hidden="true">
+        <Image
+          src={heroBackgroundImage}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="hero-photo-bg__image"
+        />
+        <div className="hero-map-overlay hero-map-overlay--tint" />
+        <div className="hero-map-overlay hero-map-overlay--depth" />
+        <div className="hero-map-overlay hero-map-overlay--readability" />
+        <div className="hero-map-overlay hero-map-overlay--vignette" />
+      </div>
+      <div className="hero-grid-bg absolute inset-0 z-[1]" aria-hidden="true" />
       <div
-        className="hero-glow pointer-events-none absolute left-1/2 top-1/2 h-[min(600px,80vw)] w-[min(600px,80vw)] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        className="hero-glow pointer-events-none absolute left-1/2 top-1/2 z-[1] h-[min(600px,80vw)] w-[min(600px,80vw)] -translate-x-1/2 -translate-y-1/2 rounded-full"
         aria-hidden="true"
       />
 
@@ -110,7 +125,7 @@ export function Hero() {
             {mobileTags.map((tag) => (
               <span
                 key={tag}
-                className="shrink-0 rounded-full border border-accent-blue/20 bg-accent-blue/10 px-3 py-2 font-mono text-[0.65rem] tracking-wide text-text"
+                className="hero-skill-chip hero-skill-chip--pill shrink-0 px-3 py-2 font-mono text-[0.65rem] tracking-wide"
               >
                 {tag}
               </span>
@@ -118,13 +133,14 @@ export function Hero() {
           </div>
         </div>
 
-        <div
-          className="hidden animate-fade-up flex-col items-center gap-5 opacity-0 lg:flex"
+        <aside
+          className="hero-aside hidden animate-fade-up flex-col items-center gap-5 opacity-0 lg:flex"
           style={{ animationDelay: "1.1s" }}
-          aria-hidden="true"
+          aria-label="Experience highlights"
         >
-          <div className="hero-orb relative flex h-[200px] w-[200px] items-center justify-center rounded-full border border-accent/20">
-            <div className="text-center">
+          <div className="hero-orb relative flex h-[200px] w-[200px] items-center justify-center rounded-full">
+            <div className="hero-orb__glass" aria-hidden="true" />
+            <div className="relative z-[1] text-center">
               <div className="gradient-text font-display text-5xl font-extrabold leading-none">
                 9+
               </div>
@@ -136,17 +152,17 @@ export function Hero() {
               </div>
             </div>
           </div>
-          <div className="flex w-full max-w-[200px] flex-col gap-2">
+          <div className="hero-aside__tags flex w-full max-w-[220px] flex-col gap-2.5">
             {mobileTags.map((tag) => (
               <span
                 key={tag}
-                className="rounded border border-accent-blue/20 bg-accent-blue/10 px-3 py-2 text-center font-mono text-[0.7rem] tracking-wide text-text"
+                className="hero-skill-chip px-3 py-2.5 text-center font-mono text-[0.7rem] tracking-wide"
               >
                 {tag}
               </span>
             ))}
           </div>
-        </div>
+        </aside>
       </SiteContainer>
     </section>
   );

@@ -15,6 +15,8 @@ export const siteConfig = {
   contactApiUrl: "https://portfolio-contact-api.onrender.com",
 } as const;
 
+export const heroBackgroundImage = "/hero-tech-hardware-bg.png";
+
 export const navLinks = [
   { label: "Home", href: "#hero" },
   { label: "About", href: "#about" },
