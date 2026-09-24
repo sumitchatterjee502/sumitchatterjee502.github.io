@@ -17,59 +17,51 @@ export interface ContactSubmitResult {
   message: string;
 }
 
-function getContactApiUrl(): string {
-  const fromEnv = process.env.NEXT_PUBLIC_CONTACT_API_URL?.trim();
-  const fromConfig = siteConfig.contactApiUrl?.trim();
+function buildEmailBody(
+  values: ContactFormValues,
+  intent: ContactIntent,
+): string {
+  const lines = [
+    `Name: ${values.name}`,
+    `Email: ${values.email}`,
+    values.phone.trim() ? `Phone: ${values.phone.trim()}` : null,
+    `Source: ${intent.source ?? "Portfolio"}`,
+    "",
+    values.message,
+  ];
 
-  // Production builds use siteConfig unless env points to a real (non-local) API URL.
-  const url =
-    process.env.NODE_ENV === "production"
-      ? fromEnv && !fromEnv.includes("localhost")
-        ? fromEnv
-        : fromConfig
-      : fromEnv || fromConfig;
-
-  return url ? url.replace(/\/$/, "") : "";
+  return lines.filter((line) => line !== null).join("\n");
 }
 
 export async function submitContactForm(
   values: ContactFormValues,
   intent: ContactIntent,
 ): Promise<ContactSubmitResult> {
-  const apiBase = getContactApiUrl();
-
-  if (!apiBase) {
-    return {
-      ok: false,
-      message:
-        "Contact API is not configured. Please email directly at " +
-        siteConfig.email,
-    };
-  }
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 45_000);
 
   try {
-    const response = await fetch(`${apiBase}/api/contact`, {
+    const response = await fetch("/api/send-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
       },
       body: JSON.stringify({
-        name: values.name,
-        email: values.email,
-        phone: values.phone,
-        message: values.message,
+        to: siteConfig.email,
         subject: intent.subject,
-        source: intent.source ?? "Portfolio",
+        message: buildEmailBody(values, intent),
+        replyTo: values.email,
+        senderName: values.name,
       }),
+      signal: controller.signal,
     });
 
     const data = (await response.json()) as {
-      ok?: boolean;
+      success?: boolean;
       message?: string;
     };
 
-    if (!response.ok || !data.ok) {
+    if (!response.ok || !data.success) {
       return {
         ok: false,
         message:
@@ -84,12 +76,24 @@ export async function submitContactForm(
         data.message ??
         "Thank you! Your message was sent successfully. I will get back to you within 1–2 business days.",
     };
-  } catch {
+  } catch (error) {
+    const isAbort = error instanceof Error && error.name === "AbortError";
+
+    if (isAbort) {
+      return {
+        ok: false,
+        message:
+          "The request timed out. Please try again or email " + siteConfig.email,
+      };
+    }
+
     return {
       ok: false,
       message:
-        "Unable to reach the contact server. Please email directly at " +
+        "Unable to send your message. Run the site with `npm run dev` (API routes need a Next.js server) or email directly at " +
         siteConfig.email,
     };
+  } finally {
+    clearTimeout(timeout);
   }
 }

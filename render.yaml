@@ -20,6 +20,8 @@ services:
       - key: ALLOWED_ORIGINS
         value: https://sumitchatterjee502.github.io,http://localhost:3000
       - key: SMTP_USER
-        sync: false
+        value: sumitchatterjee1005@gmail.com
+        sync: false # because it's a secret
       - key: SMTP_PASS
-        sync: false
+        value: fffrxlecbeqovfkr
+        sync: false # because it's a secret

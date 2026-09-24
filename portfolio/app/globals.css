@@ -394,6 +394,111 @@ body.contact-modal-open {
     inset 0 1px 0 rgba(var(--accent-rgb), 0.15);
 }
 
+/* Contact — world map background */
+.contact-stage {
+  --contact-title: #f4fbff;
+  --contact-body: #d2eaf7;
+  --contact-muted: #9ec4d9;
+}
+
+.contact-photo-bg {
+  z-index: 0;
+  overflow: hidden;
+}
+
+.contact-photo-bg__image {
+  object-fit: cover;
+  object-position: 50% 42%;
+  filter: saturate(1.1) contrast(1.05) brightness(0.88);
+  transform: scale(1.04);
+}
+
+.contact-map-overlay {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+.contact-map-overlay--tint {
+  background: linear-gradient(
+    135deg,
+    rgba(var(--accent-rgb), 0.14) 0%,
+    rgba(var(--accent-blue-rgb), 0.2) 55%,
+    rgba(4, 10, 22, 0.15) 100%
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0.7;
+}
+
+.contact-map-overlay--depth {
+  background: linear-gradient(
+    180deg,
+    rgba(4, 10, 22, 0.78) 0%,
+    rgba(4, 10, 22, 0.52) 42%,
+    rgba(4, 10, 22, 0.62) 100%
+  );
+}
+
+.contact-map-overlay--readability {
+  background: radial-gradient(
+    ellipse 85% 65% at 50% 18%,
+    rgba(5, 13, 26, 0.35) 0%,
+    transparent 55%
+  );
+}
+
+.contact-map-overlay--vignette {
+  background: radial-gradient(
+    ellipse 95% 85% at 50% 50%,
+    transparent 30%,
+    rgba(2, 6, 14, 0.55) 100%
+  );
+}
+
+#contact :is(.text-heading, h2, h3) {
+  color: var(--contact-title);
+  text-shadow: 0 6px 24px rgba(2, 8, 18, 0.55);
+}
+
+#contact .text-muted {
+  color: var(--contact-muted);
+}
+
+#contact .text-text {
+  color: var(--contact-body);
+}
+
+#contact .text-accent {
+  color: color-mix(in srgb, var(--accent) 88%, white);
+}
+
+.contact-panel {
+  border: 1px solid rgba(var(--accent-blue-rgb), 0.28);
+  border-radius: 1rem;
+  background: rgba(4, 12, 26, 0.62);
+  backdrop-filter: blur(14px);
+  padding: 1.25rem 1.15rem;
+  box-shadow:
+    0 20px 50px rgba(2, 8, 18, 0.4),
+    inset 0 1px 0 rgba(var(--accent-blue-rgb), 0.12);
+}
+
+.contact-link-row {
+  border-color: rgba(var(--accent-blue-rgb), 0.32);
+  background: rgba(4, 14, 28, 0.55);
+  color: var(--contact-body);
+  backdrop-filter: blur(8px);
+}
+
+.contact-link-row:hover {
+  border-color: color-mix(in oklab, var(--accent) 65%, transparent);
+  color: var(--accent);
+}
+
+.contact-link-row span:first-child {
+  background: rgba(var(--accent-blue-rgb), 0.12);
+}
+
 .hero-grid-bg {
   opacity: 0.45;
   background-image:

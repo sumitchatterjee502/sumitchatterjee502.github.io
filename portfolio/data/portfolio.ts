@@ -17,6 +17,8 @@ export const siteConfig = {
 
 export const heroBackgroundImage = "/hero-tech-hardware-bg.png";
 
+export const contactBackgroundImage = "/hero-world-map-tech-bg.jpg";
+
 export const navLinks = [
   { label: "Home", href: "#hero" },
   { label: "About", href: "#about" },

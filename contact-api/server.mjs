@@ -1,5 +1,25 @@
+import { existsSync, readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import http from "node:http";
 import tls from "node:tls";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const envFile = resolve(__dirname, ".env");
+
+if (existsSync(envFile)) {
+  for (const line of readFileSync(envFile, "utf8").split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const separator = trimmed.indexOf("=");
+    if (separator === -1) continue;
+    const key = trimmed.slice(0, separator).trim();
+    const value = trimmed.slice(separator + 1).trim();
+    if (key && process.env[key] === undefined) {
+      process.env[key] = value;
+    }
+  }
+}
 
 const PORT = Number(process.env.PORT || 8787);
 const RECIPIENT = process.env.CONTACT_TO || "sumitchatterjee502@gmail.com";
@@ -10,11 +30,15 @@ const SMTP_PORT = Number(process.env.SMTP_PORT || 465);
 
 const ALLOWED_ORIGINS = new Set(
   (process.env.ALLOWED_ORIGINS ||
-    "http://localhost:3000,https://sumitchatterjee502.github.io")
+    "http://localhost:3000,http://127.0.0.1:3000,https://sumitchatterjee502.github.io")
     .split(",")
     .map((origin) => origin.trim())
     .filter(Boolean),
 );
+
+function requestPath(url) {
+  return (url ?? "/").split("?")[0] || "/";
+}
 
 function json(res, status, body) {
   const payload = JSON.stringify(body);
@@ -150,18 +174,24 @@ async function sendContactEmail(body) {
 const server = http.createServer(async (req, res) => {
   setCors(req, res);
 
+  const path = requestPath(req.url);
+
   if (req.method === "OPTIONS") {
     res.writeHead(204);
     res.end();
     return;
   }
 
-  if (req.method === "GET" && req.url === "/health") {
-    json(res, 200, { ok: true, service: "portfolio-contact-api" });
+  if (req.method === "GET" && (path === "/" || path === "/health")) {
+    json(res, 200, {
+      ok: true,
+      service: "portfolio-contact-api",
+      smtpConfigured: Boolean(SMTP_USER && SMTP_PASS),
+    });
     return;
   }
 
-  if (req.method !== "POST" || req.url !== "/api/contact") {
+  if (req.method !== "POST" || path !== "/api/contact") {
     json(res, 404, { ok: false, message: "Not found." });
     return;
   }
@@ -203,6 +233,11 @@ const server = http.createServer(async (req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Contact API listening on http://localhost:${PORT}`);
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`Contact API listening on http://0.0.0.0:${PORT}`);
+  if (!SMTP_USER || !SMTP_PASS) {
+    console.warn(
+      "Warning: SMTP_USER / SMTP_PASS not set — form submissions will fail until configured.",
+    );
+  }
 });
