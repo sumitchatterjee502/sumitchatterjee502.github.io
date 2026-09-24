@@ -36,8 +36,8 @@ export function Services() {
     <SectionShell id="services">
       <SectionHeading
         headingId="services-heading"
-        tag="// 05 — Services"
-        title="Freelance Services"
+        tag="// 05 — Consulting"
+        title="Consulting Services"
         subtitle="Purpose-built engineering for teams that need reliable custom software — from architecture and development to deployment and iteration."
       />
 
