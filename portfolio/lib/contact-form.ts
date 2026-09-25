@@ -18,6 +18,8 @@ export interface ContactSubmitResult {
 }
 
 const defaultContactApiUrl = siteConfig.contactApiUrl.replace(/\/$/, "");
+const successMessage =
+  "Thank you! Your message was sent successfully. I will get back to you within 1–2 business days.";
 
 function isLocalHost(): boolean {
   if (typeof window === "undefined") return false;
@@ -25,7 +27,6 @@ function isLocalHost(): boolean {
   return host === "localhost" || host === "127.0.0.1";
 }
 
-/** GitHub Pages is static — production site always uses Render (see contactApiUrl). */
 function getContactApiUrl(): string {
   if (typeof window !== "undefined" && !isLocalHost()) {
     return defaultContactApiUrl;
@@ -65,21 +66,20 @@ function buildEmailBody(
 
 async function parseJsonResponse(
   response: Response,
-): Promise<{ ok?: boolean; success?: boolean; message?: string }> {
+): Promise<{ ok?: boolean; success?: boolean | string; message?: string }> {
   const text = await response.text();
 
   try {
     return JSON.parse(text) as {
       ok?: boolean;
-      success?: boolean;
+      success?: boolean | string;
       message?: string;
     };
   } catch {
     if (response.status === 404) {
       return {
         ok: false,
-        message:
-          "Contact API is not available at this URL (404). Deploy contact-api on Render and set GitHub secret CONTACT_API_URL.",
+        message: "Contact API is not available at this URL (404).",
       };
     }
 
@@ -122,16 +122,77 @@ async function submitViaNextApi(
     };
   }
 
-  return {
-    ok: true,
-    message:
-      data.message ??
-      "Thank you! Your message was sent successfully. I will get back to you within 1–2 business days.",
-  };
+  return { ok: true, message: data.message ?? successMessage };
 }
 
 async function sleep(ms: number): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function isContactApiHealthy(
+  apiBase: string,
+  signal: AbortSignal,
+): Promise<boolean> {
+  try {
+    const response = await fetch(`${apiBase}/health`, {
+      method: "GET",
+      mode: "cors",
+      headers: { Accept: "application/json" },
+      signal,
+    });
+    if (!response.ok) return false;
+    const data = (await response.json()) as { ok?: boolean };
+    return data.ok === true;
+  } catch {
+    return false;
+  }
+}
+
+async function submitViaFormSubmit(
+  values: ContactFormValues,
+  intent: ContactIntent,
+  signal: AbortSignal,
+): Promise<ContactSubmitResult> {
+  const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(siteConfig.email)}`;
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      name: values.name,
+      email: values.email,
+      phone: values.phone,
+      message: values.message,
+      _subject: `[Portfolio] ${intent.subject}`,
+      _replyto: values.email,
+      _captcha: "false",
+      _template: "table",
+      source: intent.source ?? "Portfolio",
+    }),
+    mode: "cors",
+    signal,
+  });
+
+  const data = await parseJsonResponse(response);
+  const accepted =
+    data.success === true ||
+    data.success === "true" ||
+    (response.ok && !data.message?.toLowerCase().includes("error"));
+
+  if (!response.ok || !accepted) {
+    return {
+      ok: false,
+      message:
+        data.message ??
+        "Could not send via FormSubmit. Check your inbox for a FormSubmit activation email, or email " +
+          siteConfig.email,
+    };
+  }
+
+  return { ok: true, message: successMessage };
 }
 
 async function postToContactApi(
@@ -167,7 +228,6 @@ async function submitViaContactApi(
 ): Promise<ContactSubmitResult> {
   const maxAttempts = 3;
   let response: Response | undefined;
-  let lastNetworkError = false;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     if (attempt > 1) {
@@ -176,53 +236,69 @@ async function submitViaContactApi(
 
     try {
       response = await postToContactApi(apiBase, values, intent, signal);
-      lastNetworkError = false;
       break;
     } catch {
-      lastNetworkError = true;
       if (attempt === maxAttempts) {
         return {
           ok: false,
-          message:
-            `Contact API at ${apiBase} is not deployed or is still waking up. ` +
-            `One-time setup: open https://render.com/deploy?repo=https://github.com/sumitchatterjee502/sumitchatterjee502.github.io ` +
-            `→ set SMTP_USER / SMTP_PASS → confirm ${apiBase}/health returns OK → set GitHub secret CONTACT_API_URL to that URL. ` +
-            `Or email ${siteConfig.email}.`,
+          message: `Contact API at ${apiBase} is not reachable.`,
         };
       }
     }
   }
 
-  if (!response || lastNetworkError) {
+  if (!response) {
     return {
       ok: false,
-      message: `Contact API at ${apiBase} is not reachable. Or email ${siteConfig.email}.`,
+      message: `Contact API at ${apiBase} is not reachable.`,
     };
   }
 
   const data = await parseJsonResponse(response);
 
   if (!response.ok || !data.ok) {
-    const fallback =
-      response.status === 404
-        ? " Check that the Render service is deployed (see render.yaml) and CONTACT_API_URL matches its URL."
-        : "";
-
     return {
       ok: false,
       message:
-        (data.message ??
-          "Something went wrong while sending your message. Please try again.") +
-        fallback,
+        data.message ??
+        "Something went wrong while sending your message. Please try again.",
     };
   }
 
-  return {
-    ok: true,
-    message:
-      data.message ??
-      "Thank you! Your message was sent successfully. I will get back to you within 1–2 business days.",
-  };
+  return { ok: true, message: data.message ?? successMessage };
+}
+
+async function submitForProduction(
+  values: ContactFormValues,
+  intent: ContactIntent,
+  signal: AbortSignal,
+): Promise<ContactSubmitResult> {
+  const mode = siteConfig.contactDelivery;
+  const apiBase = getContactApiUrl();
+
+  if (mode === "formsubmit") {
+    return submitViaFormSubmit(values, intent, signal);
+  }
+
+  if (mode === "api") {
+    if (!apiBase) {
+      return {
+        ok: false,
+        message: "Contact API URL is not configured. Email " + siteConfig.email,
+      };
+    }
+    return submitViaContactApi(values, intent, apiBase, signal);
+  }
+
+  // auto: prefer self-hosted API when deployed; otherwise FormSubmit (GitHub Pages)
+  if (apiBase) {
+    const healthy = await isContactApiHealthy(apiBase, signal);
+    if (healthy) {
+      return submitViaContactApi(values, intent, apiBase, signal);
+    }
+  }
+
+  return submitViaFormSubmit(values, intent, signal);
 }
 
 export async function submitContactForm(
@@ -237,22 +313,7 @@ export async function submitContactForm(
       return await submitViaNextApi(values, intent, controller.signal);
     }
 
-    const apiBase = getContactApiUrl();
-    if (!apiBase) {
-      return {
-        ok: false,
-        message:
-          "Contact API is not configured. Set contactApiUrl in portfolio data or CONTACT_API_URL in GitHub Actions, or email " +
-          siteConfig.email,
-      };
-    }
-
-    return await submitViaContactApi(
-      values,
-      intent,
-      apiBase,
-      controller.signal,
-    );
+    return await submitForProduction(values, intent, controller.signal);
   } catch (error) {
     const isAbort = error instanceof Error && error.name === "AbortError";
 
@@ -260,8 +321,7 @@ export async function submitContactForm(
       return {
         ok: false,
         message:
-          "Contact server timed out (Render free tier may be waking up). Please try again in a minute or email " +
-          siteConfig.email,
+          "The request timed out. Please try again or email " + siteConfig.email,
       };
     }
 
@@ -269,7 +329,7 @@ export async function submitContactForm(
       return {
         ok: false,
         message:
-          "Cannot reach /api/send-email. Run `npm run dev` in portfolio/ with GMAIL_USER and GMAIL_APP_PASSWORD in .env.local, or email " +
+          "Cannot reach /api/send-email. Use GMAIL_USER and GMAIL_APP_PASSWORD in .env.local, or email " +
           siteConfig.email,
       };
     }
@@ -277,8 +337,7 @@ export async function submitContactForm(
     return {
       ok: false,
       message:
-        "Unable to reach the contact server. Confirm Render is running and SMTP is set, or email " +
-        siteConfig.email,
+        "Unable to send your message right now. Please email " + siteConfig.email,
     };
   } finally {
     clearTimeout(timeout);

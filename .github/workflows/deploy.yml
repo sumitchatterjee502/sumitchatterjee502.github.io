@@ -52,7 +52,7 @@ jobs:
             echo "Contact API OK at ${API}/health"
             cat /tmp/health.json
           else
-            echo "::warning::Contact API not ready at ${API}/health (HTTP ${CODE}). The live contact form will fail until you deploy contact-api on Render (render.yaml) and set SMTP secrets."
+            echo "::warning::Contact API not ready at ${API}/health (HTTP ${CODE}). Live site will use FormSubmit fallback (contactDelivery: auto) until Render is deployed."
           fi
 
       - name: Verify export output

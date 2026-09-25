@@ -10,18 +10,18 @@ on:
 
 jobs:
   render-redeploy:
-    if: ${{ secrets.RENDER_DEPLOY_HOOK_URL != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Render deploy
+        if: ${{ secrets.RENDER_DEPLOY_HOOK_URL != '' }}
         run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
 
   vercel:
-    if: ${{ secrets.VERCEL_TOKEN != '' && secrets.VERCEL_ORG_ID != '' && secrets.VERCEL_PROJECT_ID != '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Deploy contact-api to Vercel
+        if: ${{ secrets.VERCEL_TOKEN != '' && secrets.VERCEL_ORG_ID != '' && secrets.VERCEL_PROJECT_ID != '' }}
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}

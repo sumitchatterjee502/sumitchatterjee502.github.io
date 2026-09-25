@@ -11,7 +11,13 @@ export const siteConfig = {
   github: "https://github.com/sumitchatterjee502",
   website: "https://sumitchatterjee502.github.io/",
   analyticsId: "G-N6TPBYV0K8",
-  /** Live contact API (Render/Vercel). Must match CONTACT_API_URL GitHub secret after deploy. */
+  /**
+   * GitHub Pages is static — no server unless you deploy contact-api (Render/Vercel).
+   * - `auto`: use API when /health OK, else FormSubmit to `email` (works on Pages).
+   * - `api`: Render/Vercel only.
+   * - `formsubmit`: FormSubmit only (no Render required).
+   */
+  contactDelivery: "auto" as const,
   contactApiUrl: "https://portfolio-contact-api.onrender.com",
 } as const;
 
