@@ -49,6 +49,11 @@ const categoryStyles: Record<ProjectDomain, CategoryStyle> = {
     glow: "rgba(244,63,94,0.12)",
     label: "text-rose-300",
   },
+  "Custom Software Development": {
+    gradient: "from-indigo-400/20 via-accent-blue/10 to-transparent",
+    glow: "rgba(99,102,241,0.14)",
+    label: "text-indigo-300",
+  },
 };
 
 export function getCategoryStyle(category: ProjectDomain): CategoryStyle {
