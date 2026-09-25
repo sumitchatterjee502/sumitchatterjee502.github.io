@@ -65,6 +65,8 @@ export const coreStack = [
   "PHP",
   "Laravel",
   "Nest.js",
+  "C#",
+  ".NET Core",
   "MySQL",
   "Redis",
   "Docker",

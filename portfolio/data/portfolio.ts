@@ -117,6 +117,8 @@ export const skillGroups = [
       "Node.js",
       "Express.js",
       "Nest.js",
+      "C#",
+      ".NET Core",
       "Strapi",
       "Medusa.js",
       "PHP",
@@ -142,7 +144,15 @@ export const skillGroups = [
   },
   {
     title: "Databases",
-    skills: ["MySQL", "PostgreSQL", "MongoDB", "Redis", "Prisma ORM", "BullMQ"],
+    skills: [
+      "MySQL",
+      "PostgreSQL",
+      "MongoDB",
+      "Redis",
+      "Prisma ORM",
+      "TypeORM",
+      "BullMQ",
+    ],
   },
   {
     title: "Cloud & DevOps",
