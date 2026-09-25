@@ -43,7 +43,7 @@ function getContactApiUrl(): string {
   return defaultContactApiUrl;
 }
 
-function useNextSendEmailRoute(): boolean {
+function shouldUseNextSendEmailRoute(): boolean {
   return process.env.NODE_ENV === "development" && isLocalHost();
 }
 
@@ -199,7 +199,7 @@ export async function submitContactForm(
   const timeout = setTimeout(() => controller.abort(), 45_000);
 
   try {
-    if (useNextSendEmailRoute()) {
+    if (shouldUseNextSendEmailRoute()) {
       return await submitViaNextApi(values, intent, controller.signal);
     }
 
@@ -231,7 +231,7 @@ export async function submitContactForm(
       };
     }
 
-    if (useNextSendEmailRoute()) {
+    if (shouldUseNextSendEmailRoute()) {
       return {
         ok: false,
         message:
