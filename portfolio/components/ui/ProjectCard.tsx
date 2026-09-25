@@ -23,6 +23,9 @@ function ProjectVisual({
 }) {
   const style = getCategoryStyle(project.category);
   const initials = getProjectInitials(project.title);
+  const customPanelLabel = project.panelLabel?.trim();
+  const panelLabel = customPanelLabel || initials;
+  const useCompactPanelLabel = panelLabel.length > 4;
 
   return (
     <div
@@ -42,7 +45,7 @@ function ProjectVisual({
       />
       <div className="hero-grid-bg absolute inset-0 opacity-60" aria-hidden="true" />
 
-      <div className="relative flex h-full flex-col justify-between p-5 md:p-6">
+      <div className="relative flex min-h-full flex-col justify-between p-5 md:p-6">
         <div className="flex items-start justify-between gap-3">
           <span
             className={cn(
@@ -59,14 +62,34 @@ function ProjectVisual({
           )}
         </div>
 
-        <div className="flex items-end justify-between gap-4">
-          <p className="max-w-[70%] font-mono text-[0.65rem] uppercase tracking-wider text-muted">
-            {project.role}
-          </p>
-          <span className="font-display text-4xl font-extrabold tracking-tight text-heading/15 md:text-5xl">
-            {initials}
-          </span>
-        </div>
+        {customPanelLabel ? (
+          <>
+            <div className="flex flex-1 items-center justify-center px-2 py-4">
+              <p className="text-center font-display text-base font-bold leading-snug text-heading/35 sm:text-lg md:text-xl">
+                {customPanelLabel}
+              </p>
+            </div>
+            <p className="font-mono text-[0.65rem] uppercase tracking-wider text-muted">
+              {project.role}
+            </p>
+          </>
+        ) : (
+          <div className="flex items-end justify-between gap-4">
+            <p className="max-w-[70%] font-mono text-[0.65rem] uppercase tracking-wider text-muted">
+              {project.role}
+            </p>
+            <span
+              className={cn(
+                "text-right leading-tight text-heading/20",
+                useCompactPanelLabel
+                  ? "max-w-[58%] font-display text-sm font-bold sm:text-base md:text-[0.95rem]"
+                  : "font-display text-4xl font-extrabold tracking-tight md:text-5xl",
+              )}
+            >
+              {panelLabel}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

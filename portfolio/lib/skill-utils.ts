@@ -56,6 +56,13 @@ export const skillGroupMeta: Record<
     gradient: "from-rose-400/15 via-accent-blue/5 to-transparent",
     accent: "text-rose-300",
   },
+  "System Design": {
+    code: "SD",
+    description: "Scalable, reliable system architecture for high-traffic production platforms.",
+    gradient: "from-cyan-400/15 via-accent/5 to-transparent",
+    accent: "text-cyan-300",
+    span: "wide",
+  },
 };
 
 export const coreStack = [

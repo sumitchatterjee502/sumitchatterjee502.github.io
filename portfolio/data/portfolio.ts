@@ -203,6 +203,62 @@ export const skillGroups = [
       "Architecture Design",
     ],
   },
+  {
+    title: "System Design",
+    skills: [
+      "Microservices",
+      "Modular Monolith",
+      "High Availability",
+      "Load Balancing",
+      "Redis Caching",
+      "Message Queues",
+      "API Versioning",
+      "Database Scaling",
+    ],
+  },
+] as const;
+
+export const systemDesignFocus = [
+  {
+    title: "Scalable Architecture",
+    description:
+      "Microservices and modular monolith patterns for insurance, fintech, and enterprise platforms — designed for growth without rewrites.",
+    highlights: [
+      "Service boundaries & bounded contexts",
+      "RESTful API contracts & versioning",
+      "1M+ daily request capacity planning",
+    ],
+  },
+  {
+    title: "Reliability & Performance",
+    description:
+      "High-availability systems with caching, async processing, and failure-aware design for production traffic.",
+    highlights: [
+      "Redis caching & session layers",
+      "BullMQ / background job pipelines",
+      "Load balancing & fault tolerance",
+    ],
+  },
+  {
+    title: "Data & Integration Design",
+    description:
+      "Schema design, ORM layers, and third-party integration patterns across payments, OCR, IoT, and auth protocols.",
+    highlights: [
+      "MySQL, PostgreSQL & MongoDB modeling",
+      "TypeORM / Prisma data access",
+      "OIDC, TOTP & webhook integrations",
+    ],
+  },
+  {
+    title: "Cloud-Native Delivery",
+    description:
+      "Containerized services on Azure/AWS with CI/CD — from local dev parity to staged production rollout.",
+    highlights: [
+      "Dockerized services & env parity",
+      "Azure / AWS deployment topologies",
+      "CI/CD pipelines & release strategy",
+    ],
+  },
 ] as const;
 
 export type ProjectCategory =
@@ -228,6 +284,8 @@ export interface Project {
   liveUrl?: string;
   repoUrl?: string;
   featured?: boolean;
+  /** Optional label on the project visual panel (instead of title initials). */
+  panelLabel?: string;
 }
 
 export const projects: Project[] = [
@@ -236,6 +294,7 @@ export const projects: Project[] = [
     category: "Fintech",
     featured: true,
     title: "Indigo Kiosk Admin Portal",
+    panelLabel: "Kiosk Admin Portal",
     role: "Team Lead / Full-Stack Developer",
     description:
       "Centralized management platform for monitoring and administering payment kiosks, transactions, users, configurations, and operational activities across the kiosk network.",
@@ -257,7 +316,8 @@ export const projects: Project[] = [
   {
     id: "lens-manufacturing",
     category: "Manufacturing",
-    title: "Lens Manufacturing Platform",
+    title: "Vimco",
+    panelLabel: "Vimco",
     role: "Project Manager / Team Lead",
     description:
       "Web-based lens manufacturing and operations platform for production workflows, order processing, inventory management, and operational activities.",
@@ -280,7 +340,8 @@ export const projects: Project[] = [
     id: "sis",
     category: "Enterprise",
     featured: true,
-    title: "SIS",
+    title: "SIS GCC (SA)",
+    panelLabel: "SIS GCC (SA)",
     role: "Team Lead / Full-Stack Developer / Project Manager",
     description:
       "Scalable enterprise platform with microservices architecture — Mobile App API, Client Portal, and Operation Portal for field operations and client workflows.",
@@ -304,6 +365,7 @@ export const projects: Project[] = [
     id: "stafingo-website",
     category: "Recruitment",
     title: "StafinGo Website",
+    panelLabel: "Stafingo Website",
     role: "Full-Stack Developer / Team Lead",
     description:
       "Recruitment and workforce solutions platform connecting job seekers with career opportunities and businesses with qualified talent.",
@@ -323,8 +385,9 @@ export const projects: Project[] = [
   },
   {
     id: "stafingo-crm",
-    category: "Recruitment",
+    category: "Enterprise",
     title: "StafinGo CRM",
+    panelLabel: "Stafingo CRM",
     role: "Full-Stack Developer / Team Lead",
     description:
       "Internal recruitment management platform for candidate management, job management, and recruitment workflows with role-based access.",
@@ -339,6 +402,7 @@ export const projects: Project[] = [
     id: "veneka",
     category: "Fintech",
     title: "Veneka",
+    panelLabel: "Veneka",
     role: "Team Lead",
     description:
       "Payment orchestration platform integrating financial institutions with core banking systems, card networks, digital wallet rails, and open banking APIs. PCI-certified, hosted on Azure.",
@@ -364,6 +428,7 @@ export const projects: Project[] = [
     category: "Fintech",
     featured: true,
     title: "Senditto",
+    panelLabel: "Senditto",
     role: "Team Lead",
     description:
       "Secure international money transfer platform with real-time transaction processing, multi-currency support, KYC/AML compliance, and fraud detection.",
@@ -378,6 +443,7 @@ export const projects: Project[] = [
     id: "unation",
     category: "Events",
     title: "UNATION",
+    panelLabel: "Unation",
     role: "Team Lead",
     description:
       "Local events discovery and ticketing platform with geolocation-based discovery, Stripe payments, and real-time management dashboard.",
@@ -392,6 +458,7 @@ export const projects: Project[] = [
     id: "ageas-federal",
     category: "Insurance",
     title: "Ageas Federal Life Insurance Portals",
+    panelLabel: "AFLI",
     role: "Team Lead",
     description:
       "Customer and renewal portals for a leading life insurance company with secure TOTP/OIDC authentication and full-stack PHP/React architecture.",
@@ -406,6 +473,7 @@ export const projects: Project[] = [
     id: "sbi-general",
     category: "Insurance",
     title: "SBI General — Rural Portals",
+    panelLabel: "SBI General Rural Portals",
     role: "Team Lead",
     description:
       "Motor and health policy purchase portals designed for rural India with navigation simplicity and accessibility focus.",

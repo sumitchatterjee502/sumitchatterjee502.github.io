@@ -1,4 +1,4 @@
-import { skillGroups } from "@/data/portfolio";
+import { skillGroups, systemDesignFocus } from "@/data/portfolio";
 import { SectionShell } from "@/components/layout/SectionShell";
 import { SkillGroupCard } from "@/components/ui/SkillGroupCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -59,6 +59,50 @@ export function Skills() {
                   {tech}
                 </span>
               </div>
+            ))}
+          </div>
+        </div>
+      </RevealOnScroll>
+
+      <RevealOnScroll>
+        <div className={`skill-feature ${panelClass} border-accent-blue/20`}>
+          <div className="border-b border-border px-5 py-5 sm:px-7 md:px-8 md:py-6">
+            <p className="font-mono text-[0.65rem] uppercase tracking-[0.14em] text-accent-blue">
+              System Design
+            </p>
+            <h3 className="mt-1 font-display text-lg font-bold text-heading sm:text-xl md:text-2xl">
+              Architecture for real-world scale
+            </h3>
+            <p className="mt-3 max-w-3xl text-sm font-light leading-relaxed text-muted">
+              How I approach reliability, data flow, and cloud delivery on
+              platforms that must stay fast, secure, and maintainable under
+              production load.
+            </p>
+          </div>
+          <div className="grid gap-4 p-4 sm:grid-cols-2 sm:p-6 md:gap-5 md:p-8 lg:grid-cols-2">
+            {systemDesignFocus.map((area) => (
+              <article
+                key={area.title}
+                className="rounded-xl border border-border bg-surface-elevated/50 p-5 transition-colors hover:border-accent-blue/25 sm:p-6"
+              >
+                <h4 className="font-display text-base font-bold text-heading sm:text-lg">
+                  {area.title}
+                </h4>
+                <p className="mt-2 text-[0.84rem] font-light leading-relaxed text-text">
+                  {area.description}
+                </p>
+                <ul className="mt-4 space-y-2">
+                  {area.highlights.map((item) => (
+                    <li
+                      key={item}
+                      className="flex gap-2 text-[0.8rem] font-light leading-snug text-muted"
+                    >
+                      <span className="font-mono text-accent-blue">▸</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
             ))}
           </div>
         </div>
