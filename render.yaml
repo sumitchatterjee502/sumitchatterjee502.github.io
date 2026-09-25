@@ -1,16 +1,18 @@
-# Render Blueprint — deploy contact API in one click
-# Dashboard: https://dashboard.render.com → New → Blueprint → connect this repo
+# One-time: Render Dashboard → New → Blueprint → connect this repo
+# Or: https://render.com/deploy?repo=https://github.com/sumitchatterjee502/sumitchatterjee502.github.io
 services:
   - type: web
     name: portfolio-contact-api
     runtime: node
-    region: singapore
+    region: oregon
     plan: free
     rootDir: contact-api
-    buildCommand: echo "No build step"
+    buildCommand: npm install
     startCommand: node server.mjs
     healthCheckPath: /health
     envVars:
+      - key: NODE_VERSION
+        value: "22"
       - key: SMTP_HOST
         value: smtp.gmail.com
       - key: SMTP_PORT
@@ -18,7 +20,7 @@ services:
       - key: CONTACT_TO
         value: sumitchatterjee502@gmail.com
       - key: ALLOWED_ORIGINS
-        value: https://sumitchatterjee502.github.io,http://localhost:3000
+        value: https://sumitchatterjee502.github.io,http://localhost:3000,http://127.0.0.1:3000
       - key: SMTP_USER
         sync: false
       - key: SMTP_PASS

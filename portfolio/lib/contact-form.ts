@@ -130,39 +130,73 @@ async function submitViaNextApi(
   };
 }
 
-async function submitViaRenderApi(
+async function sleep(ms: number): Promise<void> {
+  await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function postToContactApi(
+  apiBase: string,
+  values: ContactFormValues,
+  intent: ContactIntent,
+  signal: AbortSignal,
+): Promise<Response> {
+  return fetch(`${apiBase}/api/contact`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      name: values.name,
+      email: values.email,
+      phone: values.phone,
+      message: values.message,
+      subject: intent.subject,
+      source: intent.source ?? "Portfolio",
+    }),
+    mode: "cors",
+    signal,
+  });
+}
+
+async function submitViaContactApi(
   values: ContactFormValues,
   intent: ContactIntent,
   apiBase: string,
   signal: AbortSignal,
 ): Promise<ContactSubmitResult> {
-  let response: Response;
+  const maxAttempts = 3;
+  let response: Response | undefined;
+  let lastNetworkError = false;
 
-  try {
-    response = await fetch(`${apiBase}/api/contact`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        name: values.name,
-        email: values.email,
-        phone: values.phone,
-        message: values.message,
-        subject: intent.subject,
-        source: intent.source ?? "Portfolio",
-      }),
-      mode: "cors",
-      signal,
-    });
-  } catch {
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    if (attempt > 1) {
+      await sleep(2000 * attempt);
+    }
+
+    try {
+      response = await postToContactApi(apiBase, values, intent, signal);
+      lastNetworkError = false;
+      break;
+    } catch {
+      lastNetworkError = true;
+      if (attempt === maxAttempts) {
+        return {
+          ok: false,
+          message:
+            `Contact API at ${apiBase} is not deployed or is still waking up. ` +
+            `One-time setup: open https://render.com/deploy?repo=https://github.com/sumitchatterjee502/sumitchatterjee502.github.io ` +
+            `→ set SMTP_USER / SMTP_PASS → confirm ${apiBase}/health returns OK → set GitHub secret CONTACT_API_URL to that URL. ` +
+            `Or email ${siteConfig.email}.`,
+        };
+      }
+    }
+  }
+
+  if (!response || lastNetworkError) {
     return {
       ok: false,
-      message:
-        `Contact API at ${apiBase} is not reachable (browser blocked the request or the service is down). ` +
-        `Deploy it on Render: Dashboard → New → Blueprint → this repo → set SMTP_USER / SMTP_PASS, then open ${apiBase}/health. ` +
-        `Or email ${siteConfig.email}.`,
+      message: `Contact API at ${apiBase} is not reachable. Or email ${siteConfig.email}.`,
     };
   }
 
@@ -213,7 +247,7 @@ export async function submitContactForm(
       };
     }
 
-    return await submitViaRenderApi(
+    return await submitViaContactApi(
       values,
       intent,
       apiBase,

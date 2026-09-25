@@ -11,7 +11,7 @@ export const siteConfig = {
   github: "https://github.com/sumitchatterjee502",
   website: "https://sumitchatterjee502.github.io/",
   analyticsId: "G-N6TPBYV0K8",
-  /** Self-hosted contact API (Render). Override locally via NEXT_PUBLIC_CONTACT_API_URL */
+  /** Live contact API (Render/Vercel). Must match CONTACT_API_URL GitHub secret after deploy. */
   contactApiUrl: "https://portfolio-contact-api.onrender.com",
 } as const;
 

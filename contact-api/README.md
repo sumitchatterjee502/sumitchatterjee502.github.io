@@ -2,7 +2,9 @@
 
 Custom email API for the portfolio contact form. Sends inquiries to your Gmail inbox via SMTP — no Formspree, Web3Forms, or other form SaaS.
 
-**Stack:** Node.js only (`http` + `tls`) — zero npm dependencies.
+**Stack:** Node.js + nodemailer (Gmail SMTP). Runs on **Render**, **Vercel** (`contact-api/api/*`), or locally (`server.mjs`).
+
+**Deploy to Render (fastest):** [Deploy to Render](https://render.com/deploy?repo=https://github.com/sumitchatterjee502/sumitchatterjee502.github.io) → set `SMTP_USER` / `SMTP_PASS` → verify `/health` → set GitHub secret `CONTACT_API_URL`.
 
 ---
 
