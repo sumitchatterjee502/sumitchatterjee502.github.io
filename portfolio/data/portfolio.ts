@@ -17,7 +17,7 @@ export const siteConfig = {
    * - `api`: Render/Vercel only.
    * - `formsubmit`: FormSubmit only (no Render required).
    */
-  contactDelivery: "auto" as const,
+  contactDelivery: "auto" as "auto" | "api" | "formsubmit",
   contactApiUrl: "https://portfolio-contact-api.onrender.com",
 } as const;
 
