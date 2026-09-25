@@ -37,10 +37,23 @@ jobs:
       - name: Install and build static export
         working-directory: portfolio
         run: |
+          rm -f .env .env.local .env.development .env.production
           npm ci
           npm run build
         env:
-          NEXT_PUBLIC_CONTACT_API_URL: ${{ secrets.CONTACT_API_URL }}
+          NEXT_PUBLIC_CONTACT_API_URL: ${{ secrets.CONTACT_API_URL || 'https://portfolio-contact-api.onrender.com' }}
+
+      - name: Check contact API (Render)
+        run: |
+          API="${{ secrets.CONTACT_API_URL || 'https://portfolio-contact-api.onrender.com' }}"
+          API="${API%/}"
+          CODE="$(curl -sS -o /tmp/health.json -w "%{http_code}" "${API}/health" || echo 000)"
+          if [ "$CODE" = "200" ]; then
+            echo "Contact API OK at ${API}/health"
+            cat /tmp/health.json
+          else
+            echo "::warning::Contact API not ready at ${API}/health (HTTP ${CODE}). The live contact form will fail until you deploy contact-api on Render (render.yaml) and set SMTP secrets."
+          fi
 
       - name: Verify export output
         working-directory: portfolio

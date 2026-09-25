@@ -17,25 +17,34 @@ export interface ContactSubmitResult {
   message: string;
 }
 
-/** GitHub Pages is static — email goes through Render in production builds. */
+const defaultContactApiUrl = siteConfig.contactApiUrl.replace(/\/$/, "");
+
+function isLocalHost(): boolean {
+  if (typeof window === "undefined") return false;
+  const host = window.location.hostname;
+  return host === "localhost" || host === "127.0.0.1";
+}
+
+/** GitHub Pages is static — production site always uses Render (see contactApiUrl). */
 function getContactApiUrl(): string {
+  if (typeof window !== "undefined" && !isLocalHost()) {
+    return defaultContactApiUrl;
+  }
+
   const fromEnv = process.env.NEXT_PUBLIC_CONTACT_API_URL?.trim();
-  const fromConfig = siteConfig.contactApiUrl?.trim();
+  if (
+    fromEnv &&
+    !fromEnv.includes("localhost") &&
+    !fromEnv.includes("127.0.0.1")
+  ) {
+    return fromEnv.replace(/\/$/, "");
+  }
 
-  const url =
-    process.env.NODE_ENV === "production"
-      ? fromEnv && !fromEnv.includes("localhost")
-        ? fromEnv
-        : fromConfig
-      : fromEnv && !fromEnv.includes("localhost")
-        ? fromEnv
-        : fromConfig;
-
-  return url ? url.replace(/\/$/, "") : "";
+  return defaultContactApiUrl;
 }
 
 function useNextSendEmailRoute(): boolean {
-  return process.env.NODE_ENV === "development";
+  return process.env.NODE_ENV === "development" && isLocalHost();
 }
 
 function buildEmailBody(
@@ -127,23 +136,35 @@ async function submitViaRenderApi(
   apiBase: string,
   signal: AbortSignal,
 ): Promise<ContactSubmitResult> {
-  const response = await fetch(`${apiBase}/api/contact`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({
-      name: values.name,
-      email: values.email,
-      phone: values.phone,
-      message: values.message,
-      subject: intent.subject,
-      source: intent.source ?? "Portfolio",
-    }),
-    mode: "cors",
-    signal,
-  });
+  let response: Response;
+
+  try {
+    response = await fetch(`${apiBase}/api/contact`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        message: values.message,
+        subject: intent.subject,
+        source: intent.source ?? "Portfolio",
+      }),
+      mode: "cors",
+      signal,
+    });
+  } catch {
+    return {
+      ok: false,
+      message:
+        `Contact API at ${apiBase} is not reachable (browser blocked the request or the service is down). ` +
+        `Deploy it on Render: Dashboard → New → Blueprint → this repo → set SMTP_USER / SMTP_PASS, then open ${apiBase}/health. ` +
+        `Or email ${siteConfig.email}.`,
+    };
+  }
 
   const data = await parseJsonResponse(response);
 
