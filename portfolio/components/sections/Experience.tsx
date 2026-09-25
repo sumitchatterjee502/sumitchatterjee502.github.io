@@ -210,7 +210,7 @@ export function Experience() {
                 Domains
               </p>
               <div className="mt-3 flex flex-wrap gap-2">
-                {["Insurance", "Fintech", "Banking", "IoT"].map((domain) => (
+                {["Insurance", "Fintech", "Banking", "IoT", "Enterprise", "Custom Software Development"].map((domain) => (
                   <span
                     key={domain}
                     className="rounded border border-border px-2 py-1 font-mono text-[0.62rem] text-muted"

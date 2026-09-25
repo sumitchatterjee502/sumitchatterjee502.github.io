@@ -270,7 +270,8 @@ export type ProjectCategory =
   | "IoT"
   | "Recruitment"
   | "Manufacturing"
-  | "Events";
+  | "Events"
+  | "Custom Software Development";
 
 export interface Project {
   id: string;
